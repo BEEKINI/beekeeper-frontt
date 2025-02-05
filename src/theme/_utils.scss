@@ -1,0 +1,182 @@
+@use "sass:map";
+@use "@angular/material" as mat;
+@use "@material/shape/shape";
+@use "@material/typography/typography";
+
+@function get-palette($theme, $hue) {
+  $color-config: mat.get-color-config($theme);
+  @return map.get($color-config, $hue);
+}
+
+@function get-color($palette, $hue: default) {
+  @return mat.get-color-from-palette($palette, $hue);
+}
+
+@function get-color-from-palette($theme, $palette, $hue) {
+  @return get-color(get-palette($theme, $palette), $hue);
+}
+
+@function get-contrast-color($palette, $hue: default) {
+  @return mat.get-contrast-color-from-palette($palette, $hue);
+}
+
+@mixin background-color($palette, $hue: default) {
+  background-color: mat.get-color-from-palette($palette, $hue) !important;
+  color: mat.get-contrast-color-from-palette($palette, $hue) !important;
+}
+
+@mixin typography($config-or-theme, $level) {
+  $typography-config: mat.get-typography-config($config-or-theme);
+  @include mat.typography-level($typography-config, $level);
+}
+@mixin font-size($config-or-theme, $level) {
+  $typography-config: mat.get-typography-config($config-or-theme);
+  font-size: mat.font-size($typography-config, $level);
+}
+@mixin font-weight($config-or-theme, $level) {
+  $typography-config: mat.get-typography-config($config-or-theme);
+  font-weight: mat.font-weight($typography-config, $level);
+}
+@mixin line-height($config-or-theme, $level) {
+  $typography-config: mat.get-typography-config($config-or-theme);
+  line-height: mat.line-height($typography-config, $level);
+}
+@mixin letter-spacing($config-or-theme, $level) {
+  $typography-config: mat.get-typography-config($config-or-theme);
+  letter-spacing: mat.letter-spacing($typography-config, $level);
+}
+
+@mixin radius($radius: medium) {
+  @include shape.radius($radius);
+}
+
+@mixin _border {
+  style: solid;
+  width: 1px;
+}
+
+@mixin border($directions...) {
+  @each $direction in $directions {
+    $validDirections: (top, right, bottom, left);
+    @if not index($validDirections, $direction) {
+      @error "Property '#{$direction}' must be one of #{$validDirections}.";
+    }
+  }
+  @if index((0, 4), length($directions)) {
+    border: {
+      @include _border();
+    }
+  } @else {
+    @each $direction in $directions {
+      border-#{$direction}: {
+        @include _border();
+      }
+    }
+  }
+}
+
+@mixin flex-column() {
+  display: flex;
+  flex-direction: column;
+}
+
+@mixin flex-column-gap($gap) {
+  @include flex-column();
+  row-gap: $gap;
+}
+
+@mixin flex-row() {
+  display: flex;
+  flex-direction: row;
+}
+
+@mixin flex-row-gap($gap) {
+  @include flex-row();
+  column-gap: $gap;
+}
+
+@mixin flex-column-align($align-direction) {
+  @include flex-column();
+  align-items: $align-direction;
+}
+
+@mixin flex-row-align($align-direction) {
+  @include flex-row();
+  align-items: $align-direction;
+}
+
+@mixin flex-row-gap-align($gap, $align-direction) {
+  @include flex-row-gap($gap);
+  align-items: $align-direction;
+}
+
+@mixin flex-column-gap-align($gap, $align-direction) {
+  @include flex-column-gap($gap);
+  align-items: $align-direction;
+}
+
+@mixin flex-row-justify($justify-direction) {
+  @include flex-row();
+  justify-content: $justify-direction;
+}
+
+@mixin flex-column-justify($justify-direction) {
+  @include flex-column();
+  justify-content: $justify-direction;
+}
+
+@mixin flex-row-justify-gap($justify-direction, $gap) {
+  @include flex-row-gap($gap);
+  justify-content: $justify-direction;
+}
+
+@mixin flex-column-justify-gap($justify-direction, $gap) {
+  @include flex-column-gap($gap);
+  justify-content: $justify-direction;
+}
+
+@mixin flex-row-align-justify($align-direction, $justify-direction) {
+  @include flex-row-align($align-direction);
+  justify-content: $justify-direction;
+}
+
+@mixin flex-column-align-justify($align-direction, $justify-direction) {
+  @include flex-column-align($align-direction);
+  justify-content: $justify-direction;
+}
+
+@mixin flex-row-gap-align-justify($gap, $align-direction, $justify-direction) {
+  @include flex-row-gap-align($gap, $align-direction);
+  justify-content: $justify-direction;
+}
+
+@mixin flex-column-gap-align-justify(
+  $gap,
+  $align-direction,
+  $justify-direction
+) {
+  @include flex-column-gap-align($gap, $align-direction);
+  justify-content: $justify-direction;
+}
+
+@mixin mat-icon-size($height: 24px) {
+  height: $height;
+  width: $height;
+  font-size: $height;
+}
+
+@mixin grow-no-more-than-flex-column-parent($selfFlex: true) {
+  height: 0;
+  flex: 1;
+
+  @if $selfFlex {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+@mixin hover-link() {
+  opacity: 0.6;
+  cursor: pointer;
+  color: inherit;
+}

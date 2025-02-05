@@ -1,0 +1,195 @@
+@use "../utils";
+@use "@angular/material" as mat;
+@use "@material/button/button-theme" as mdc-button-theme;
+@use "@material/button/button-text-theme" as mdc-button-text-theme;
+@use "@material/button/button-filled-theme" as mdc-button-filled-theme;
+@use "@material/button/button-outlined-theme" as mdc-button-outlined-theme;
+
+@mixin _default-color($background-palette, $foreground-palette) {
+  border-color: utils.get-color($background-palette, status-bar);
+  background-color: utils.get-color($background-palette, background-contrasted);
+  color: utils.get-color($foreground-palette, text);
+}
+
+@mixin color($theme-or-color-config) {
+  $color-config: mat.get-color-config($theme-or-color-config);
+  $primary-palette: utils.get-palette($color-config, primary);
+  $warn-palette: utils.get-palette($color-config, warn);
+  $accent-palette: utils.get-palette($color-config, accent);
+  $success-palette: utils.get-palette($color-config, success);
+  $background-palette: utils.get-palette($color-config, background);
+  $foreground-palette: utils.get-palette($color-config, foreground);
+
+  a.mat-mdc-button.mat-mdc-button-base {
+    @include mdc-button-theme.height(inherit);
+    width: inherit;
+    min-width: initial;
+    border-radius: initial;
+  }
+
+  .mat-mdc-button-disabled {
+    @include utils.background-color($primary-palette, lighter);
+  }
+
+  .app-color-button,
+  .app-stroked-button__button--custom {
+    &--dark {
+      --app-color-button-text-color: #{utils.get-contrast-color(
+          $primary-palette,
+          default
+        )};
+    }
+    &--light {
+      --app-color-button-text-color: #{utils.get-color(
+          $primary-palette,
+          default
+        )};
+    }
+  }
+
+  .app-button,
+  .app-stroked-button,
+  .app-color-button {
+    .mat-mdc-outlined-button {
+      &:not(:disabled) {
+        &.mat-danger {
+          @include _stroked-color($warn-palette, default);
+        }
+
+        &.mat-warn {
+          @include _stroked-color($warn-palette, lighter);
+        }
+
+        &.mat-success {
+          @include _stroked-color($accent-palette, success);
+        }
+
+
+        &.mat-primary {
+          @include _stroked-color($primary-palette, default);
+        }
+
+        &.mat-running {
+          @include _color($accent-palette, running);
+        }
+      }
+    }
+
+    .mat-mdc-unelevated-button {
+      @include utils.radius(small);
+      border: 1px solid transparent;
+      padding: 6px 12px;
+
+      &.mat-danger {
+        @include _color($warn-palette, default);
+      }
+
+      &.mat-warn {
+        @include _color($warn-palette, lighter);
+      }
+
+      &.mat-success {
+        @include _color($accent-palette, success);
+      }
+
+
+      &.mat-primary {
+        @include _color($primary-palette, default);
+      }
+
+      &.mat-running {
+        @include _color($accent-palette, running);
+      }
+
+      &.mat-default:not(:disabled) {
+        @include _default-color($background-palette, $foreground-palette);
+      }
+    }
+  }
+
+  .mat-button-toggle-checked.mat-button-toggle-appearance-standard {
+    @include utils.background-color($primary-palette);
+  }
+
+  .mat-mdc-mini-fab {
+    &:not(:disabled) {
+      &.mat-default {
+        @include _default-color($background-palette, $foreground-palette);
+      }
+    }
+  }
+}
+
+@mixin _height($height) {
+  .mat-mdc-button,
+  .mat-mdc-raised-button,
+  .mat-mdc-unelevated-button,
+  .mat-mdc-outlined-button {
+    &.mat-mdc-button-base {
+      @include mdc-button-theme.height($height);
+      .mat-mdc-button-touch-target {
+        height: $height;
+      }
+    }
+  }
+}
+
+@mixin height($height) {
+  .app-button,
+  .app-color-button,
+  .app-stroked-button {
+    &__button {
+      height: $height;
+    }
+  }
+  .app-button__label {
+    height: $height;
+  }
+  @include _height($height);
+}
+
+@mixin width($width) {
+  .app-button,
+  .app-color-button,
+  .app-stroked-button {
+    &__button {
+      width: $width;
+      min-width: $width;
+    }
+  }
+}
+
+@mixin font-size($theme, $level) {
+  .app-button__label {
+    @include utils.typography($theme, $level);
+  }
+}
+
+@mixin _stroked-color($palette, $hue) {
+  &:not(:disabled) {
+    @include mdc-button-outlined-theme.theme(
+      (
+        label-text-color: utils.get-color($palette, $hue),
+        outline-color: utils.get-color($palette, $hue),
+      )
+    );
+    // @include ripple-color(utils.get-color($palette, $hue));
+  }
+}
+
+@mixin _color($palette, $hue) {
+  &:not(:disabled) {
+    @include mdc-button-filled-theme.theme(
+      (
+        container-color: utils.get-color($palette, $hue),
+        label-text-color: utils.get-contrast-color($palette, $hue),
+      )
+    );
+    border-color: utils.get-color($palette, $hue);
+  }
+}
+
+@mixin _mini-fab-color($palette, $hue) {
+  @include ripple-color(utils.get-color($palette, $hue));
+  color: utils.get-contrast-color($palette, $hue);
+}

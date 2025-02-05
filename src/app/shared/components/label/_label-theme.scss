@@ -1,0 +1,11 @@
+@use "../../../../theme/utils";
+
+@mixin color($theme-or-color-config) {
+  $warn-palette: utils.get-palette($theme-or-color-config, warn);
+  .app-checkbox label,
+  .app-label {
+    &--required:not(:empty)::after {
+      color: utils.get-color($warn-palette);
+    }
+  }
+}
