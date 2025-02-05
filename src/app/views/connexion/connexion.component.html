@@ -1,0 +1,40 @@
+<div class="connexion__div">
+    <img class="connexion__div__logo" src="assets/svg/logo.svg" alt="Logo">
+    <form class="connexion__div__form" [formGroup]="form" (submit)="connexion()">
+        <div class="connexion__div__form__content">
+            <app-input 
+                class="connexion__div__form__content__input"
+                [formControl]="form.controls.email"
+                [errorMessages]="{
+                    email: 'Email invalide',
+                }"
+            >
+                Email
+            </app-input>
+            <app-input 
+                class="connexion__div__form__content__input"
+                [formControl]="form.controls.password"
+                [errorMessages]="{
+                    required: 'Mot de passe requis',
+                    password: 'Mot de passe invalide',
+                }"
+                type='password'
+            >
+                Password
+            </app-input>
+
+        </div>
+        <app-button 
+            class="connexion__div__form__save"            
+            type='submit'
+        >
+            Sauvegarder
+        </app-button>
+    </form>
+
+    <div class="connexion__div__links">
+        <p class="connexion__div__links__link" (click)="newAccount()">
+          Nouveau ? 
+        </p>
+      </div>
+</div>

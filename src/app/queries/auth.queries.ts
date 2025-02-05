@@ -10,5 +10,12 @@ export class AuthQueries {
 
   public register(user: User): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/register`, user);
+  }  
+  
+  public login(email: string, password: string): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/login`, {
+      email,
+      password,
+    });
   }
 }
