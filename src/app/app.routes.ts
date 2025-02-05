@@ -1,2 +1,14 @@
 import { Routes } from '@angular/router';
-export const routes: Routes = [];
+import { InscriptionComponent } from './views/inscription/inscription.component';
+export const routes: Routes = [
+  {
+    path: 'inscription',
+    component: InscriptionComponent,
+    pathMatch: 'full',
+  },
+  {
+    path: '',
+    redirectTo: 'inscription',
+    pathMatch: 'full',
+  },
+];

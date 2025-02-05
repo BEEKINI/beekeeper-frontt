@@ -1,0 +1,39 @@
+@use "../../../theme/utils";
+:host {
+  .inscription {
+    &__form {
+      padding: 15px;
+      @include utils.flex-column-align-justify(center, space-between);
+
+      &__logo {
+        width: 180px;
+        height: 180px;
+      }
+
+      &__form {
+        width: 100%;
+        @include utils.flex-column-gap-align(10px, center);
+
+        &__content {
+          @include utils.flex-column-gap(25px);
+          width: 100%;
+
+          &__input {
+            flex: 1;
+          }
+        }
+
+        &__register {
+          margin-block: 30px;
+        }
+      }
+
+      &__links {
+        &__link {
+          text-decoration: underline;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}
