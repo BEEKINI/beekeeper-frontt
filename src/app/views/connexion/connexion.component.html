@@ -15,7 +15,6 @@
                 class="connexion__div__form__content__input"
                 [formControl]="form.controls.password"
                 [errorMessages]="{
-                    required: 'Mot de passe requis',
                     password: 'Mot de passe invalide',
                 }"
                 type='password'
@@ -34,7 +33,7 @@
 
     <div class="connexion__div__links">
         <p class="connexion__div__links__link" (click)="newAccount()">
-          Nouveau ? 
+          Pas de compte ? 
         </p>
       </div>
 </div>
