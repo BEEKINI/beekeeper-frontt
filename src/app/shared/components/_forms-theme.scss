@@ -1,0 +1,23 @@
+@use "../../../theme/utils";
+@use "./input/input-theme";
+@use "./label/label-theme";
+@use "@material/dialog/dialog-theme";
+
+@mixin theme($theme-or-color-config) {
+  @include input-theme.theme($theme-or-color-config);
+  @include label-theme.color($theme-or-color-config);
+  @include typography($theme-or-color-config);
+  @include display();
+}
+
+@mixin typography($config-or-theme) {
+  .mat-mdc-form-field-error {
+    @include utils.typography($config-or-theme, body-2);
+  }
+}
+
+@mixin display() {
+  .mat-mdc-form-field-hint-wrapper {
+    padding: 0;
+  }
+}

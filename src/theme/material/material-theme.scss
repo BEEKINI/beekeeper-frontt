@@ -1,0 +1,159 @@
+@use '@angular/material' as mat;
+
+@use './button-theme';
+@use './variables-material-light-theme' as light-theme;
+@use '../../app/shared/components/forms-theme';
+
+@function define-typography-config(
+  // todo changer la font
+  $font-family: '"Helvetica Neue", Helvetica, Arial, sans-serif',
+  $headline-1: mat.define-typography-level(96px, 96px, 300),
+  $headline-2: mat.define-typography-level(60px, 60px, 300),
+  $headline-3: mat.define-typography-level(48px, 50px, 400),
+  $headline-4: mat.define-typography-level(34px, 40px, 400),
+  $headline-5: mat.define-typography-level(24px, 32px, 400),
+  $headline-6: mat.define-typography-level(22px, 32px, 500),
+  $subtitle-1: mat.define-typography-level(18px, 28px, 400),
+  $subtitle-2: mat.define-typography-level(14px, 20px, 500),
+  $body-1: mat.define-typography-level(18px, 28px, 400),
+  $body-2: mat.define-typography-level(16px, 20px, 400),
+  $caption: mat.define-typography-level(12px, 20px, 400),
+  $button: mat.define-typography-level(16px, 36px, 500),
+  $overline: mat.define-typography-level(12px, 32px, 500)
+) {
+  @return mat.define-typography-config(
+    $font-family,
+    $headline-1,
+    $headline-2,
+    $headline-3,
+    $headline-4,
+    $headline-5,
+    $headline-6,
+    $subtitle-1,
+    $subtitle-2,
+    $body-1,
+    $body-2,
+    $caption,
+    $button,
+    $overline
+  );
+}
+
+$typography: define-typography-config(
+  $headline-5: mat.define-typography-level(20px, 28px, 500),
+  $headline-6: mat.define-typography-level(18px, 28px, 500),
+  $subtitle-1: mat.define-typography-level(12px, 20px, 500),
+  $subtitle-2: mat.define-typography-level(14px, 20px, 500),
+  $body-2: mat.define-typography-level(12px, 18px, 400),
+  $body-1: mat.define-typography-level(12px, 28px, 400),
+  $caption: mat.define-typography-level(9px, 16px, 400),
+  $button: mat.define-typography-level(14px, 30px, 500),
+);
+
+@function create-theme(
+  $primary,
+  $accent,
+  $warn,
+  $foreground,
+  $background,
+  $typography: $typography
+) {
+  @return (
+    color: (
+      primary: $primary,
+      accent: $accent,
+      warn: $warn,
+      foreground: $foreground,
+      background: $background,
+    ),
+    typography: $typography,
+    density: 0
+  );
+}
+
+@function define-palette($base-palette) {
+  @return mat.define-palette($base-palette, default, lighter, darker);
+}
+
+@include mat.core();
+
+$light-theme: create-theme(
+  define-palette(light-theme.$primary),
+  define-palette(light-theme.$accent),
+  define-palette(light-theme.$warn),
+  light-theme.$foreground,
+  light-theme.$background
+);
+
+@mixin typography($theme, $selector: '.mat-typography') {
+  @include mat.typography-hierarchy($theme, $selector);
+  #{$selector} {
+    .mat-h1,
+    .mat-headline-5,
+    h1,
+    .mat-h2,
+    .mat-headline-6,
+    h2,
+    .mat-h3,
+    .mat-subtitle-1,
+    h3,
+    .mat-h4,
+    .mat-body-1,
+    h4,
+    .mat-h5,
+    h5,
+    .mat-h6,
+    h6,
+    .mat-headline-1,
+    .mat-headline-2,
+    .mat-headline-3,
+    .mat-headline-4 {
+      margin: 0;
+    }
+  }
+}
+
+@mixin all-module-typography($theme) {
+  @include forms-theme.typography($theme);
+}
+
+@mixin color($theme) {
+  @include button-theme.color($theme);
+}
+
+@include typography($light-theme);
+html {
+  @include mat.all-component-themes($light-theme);
+  @include mat.checkbox-density(-1);
+  @include mat.chips-density(-2);
+  @include mat.icon-button-density(-1);
+  @include mat.radio-density(-1);
+  @include button-theme.height(44px);
+  @include color($light-theme);
+  @include forms-theme.theme($light-theme);
+  @include mat.button-toggle-density(-1);
+  @include mat.table-density(-3);
+}
+
+@include typography($typography);
+@include mat.all-component-typographies($typography);
+@include all-module-typography($typography);
+@include mat.button-density(-1);
+@include mat.icon-button-density(-4);
+@include mat.chips-density(-4);
+@include mat.paginator-density(-4);
+@include mat.checkbox-density(-3);
+@include mat.radio-density(-3);
+@include mat.button-toggle-density(-4);
+@include mat.table-density(-4);
+
+.mdc-dialog .mdc-dialog__container {
+  .mdc-dialog {
+    &__title::before {
+      height: 28px;
+    }
+    &__actions {
+      padding: 8px;
+    }
+  }
+}

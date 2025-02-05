@@ -1,0 +1,47 @@
+:host {
+  display: block;
+  width: fit-content;
+  position: relative;
+
+  .app-button,
+  .app-icon-button,
+  .app-color-button,
+  .app-stroked-button {
+    &__button {
+      width: inherit;
+      overflow: hidden;
+    }
+  }
+
+  &.app-button--disabled {
+    pointer-events: none;
+  }
+
+  .app-button__label {
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 5px;
+    max-width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .app-button__spin-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  ::ng-deep {
+    .mdc-button__label {
+      display: inline-flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      overflow: hidden;
+    }
+  }
+}

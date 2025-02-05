@@ -1,0 +1,26 @@
+@use "../../../../theme/utils";
+@use "@material/shape/shape";
+
+@mixin theme($theme) {
+  $background-palette: utils.get-palette($theme, background);
+  $primary-palette: utils.get-palette($theme, primary);
+  $accent-palette: utils.get-palette($theme, accent);
+  $warn-palette: utils.get-palette($theme, warn);
+
+  .app-input {
+    &__hint {
+      &--success {
+        color: utils.get-color($accent-palette, success);
+      }
+      &--danger {
+        color: utils.get-color($warn-palette, default);
+      }
+      &--warn {
+        color: utils.get-color($warn-palette, lighter);
+      }
+      &--running {
+        color: utils.get-color($accent-palette, running);
+      }
+    }
+  }
+}

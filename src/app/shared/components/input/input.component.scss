@@ -1,0 +1,17 @@
+:host {
+  width: inherit;
+  ::ng-deep {
+    .mdc-text-field__input::-webkit-calendar-picker-indicator {
+      display: initial;
+    }
+
+    .mat-mdc-autocomplete-trigger {
+      font-size: 14px;
+    }
+  }
+  &.no-resize {
+    .app-input__text-area {
+      resize: none;
+    }
+  }
+}
