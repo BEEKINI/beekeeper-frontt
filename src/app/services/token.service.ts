@@ -3,7 +3,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 
 export interface Token {
   access_token: string;
-  type_token: string;
+  token_type: string;
 }
 
 @Injectable({

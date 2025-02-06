@@ -102,7 +102,9 @@
       </div>
     </mat-sidenav>
 
-    <div class="dashboard__content">
+    <div
+      [ngClass]="isMobile ? 'dashboard__content__mobile' : 'dashboard__content'"
+    >
       <router-outlet></router-outlet>
     </div>
   </mat-sidenav-container>
