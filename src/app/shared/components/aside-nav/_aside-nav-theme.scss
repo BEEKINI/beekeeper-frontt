@@ -1,0 +1,52 @@
+@use "../../../../theme/utils";
+
+@mixin theme($theme) {
+  $primary-palette: utils.get-palette($theme, primary);
+  $background-palette: utils.get-palette($theme, background);
+  $warn-palette: utils.get-palette($theme, warn);
+  $foreground-palette: utils.get-palette($theme, foreground);
+  .aside-nav {
+    &__container {
+      @include utils.background-color($primary-palette, 300);
+
+      &__header {
+        border-bottom-color: utils.get-color($background-palette, light);
+        &__title {
+          color: utils.get-color($background-palette, light);
+        }
+      }
+
+      &__menu {
+        &__item {
+          &:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+          }
+
+          &__active {
+            background-color: utils.get-color($warn-palette, lighter);
+            color: utils.get-color($foreground-palette, text);
+
+            .aside-nav__container__menu__item__icon {
+              color: utils.get-color($background-palette, light);
+            }
+          }
+
+          &__icon {
+            color: utils.get-color($background-palette, light);
+            &--mobile {
+              color: utils.get-color($background-palette, light);
+            }
+          }
+
+          &__label {
+            color: utils.get-color($background-palette, light);
+          }
+        }
+      }
+
+      &__footer {
+        border-top-color: utils.get-color($background-palette, light);
+      }
+    }
+  }
+}

@@ -5,13 +5,13 @@ import { User } from '../services/user.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthQueries {
-  protected readonly baseUrl = 'http://localhost:8081/auth';
+  protected readonly baseUrl = 'http://localhost:80/';
   protected readonly http = inject(HttpClient);
 
   public register(user: User): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/register`, user);
-  }  
-  
+  }
+
   public login(email: string, password: string): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/login`, {
       email,
