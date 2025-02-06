@@ -21,6 +21,7 @@ $background: (
   background-contrasted: $light-bg-darker-5,
   card: $light-bg-lighter-5,
   dialog: $light-bg-lighter-5,
+  light: $light-background,
 );
 
 $light-primary-text: #ffffff;
@@ -44,9 +45,9 @@ $primary: (
 
 $accent: (
   lighter: #d9edf6,
-  default: #D63939,
+  default: #d63939,
   success: #4caf50,
-  primary: #EC7F20,
+  primary: #ec7f20,
   // todo not used yet
   darker: darkviolet,
 
@@ -62,7 +63,7 @@ $accent: (
 
 $warn: (
   default: #d32f2f,
-  lighter: #F6BD4E,
+  lighter: #f6bd4e,
   darker: #ac2925,
 
   contrast: (

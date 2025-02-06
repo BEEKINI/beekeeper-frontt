@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { ConnexionComponent } from './views/connexion/connexion.component';
 import { InscriptionComponent } from './views/inscription/inscription.component';
+import { DashboardComponent } from './views/dashboard/dashboard.component';
 export const routes: Routes = [
   {
     path: 'inscription',
@@ -11,6 +12,14 @@ export const routes: Routes = [
     path: 'connexion',
     component: ConnexionComponent,
     pathMatch: 'full',
+  },
+  {
+    path: 'dashboard',
+    component: DashboardComponent,
+    pathMatch: 'full',
+    children: [
+      // todo add children when dev each tabs
+    ],
   },
   {
     path: '',

@@ -1,8 +1,9 @@
-@use '@angular/material' as mat;
+@use "@angular/material" as mat;
 
-@use './button-theme';
-@use './variables-material-light-theme' as light-theme;
-@use '../../app/shared/components/forms-theme';
+@use "./button-theme";
+@use "./variables-material-light-theme" as light-theme;
+@use "../../app/shared/components/forms-theme";
+@use "../../app/shared/shared-theme";
 
 @function define-typography-config(
   // todo changer la font
@@ -85,7 +86,7 @@ $light-theme: create-theme(
   light-theme.$background
 );
 
-@mixin typography($theme, $selector: '.mat-typography') {
+@mixin typography($theme, $selector: ".mat-typography") {
   @include mat.typography-hierarchy($theme, $selector);
   #{$selector} {
     .mat-h1,
@@ -131,6 +132,7 @@ html {
   @include button-theme.height(44px);
   @include color($light-theme);
   @include forms-theme.theme($light-theme);
+  @include shared-theme.theme($light-theme);
   @include mat.button-toggle-density(-1);
   @include mat.table-density(-3);
 }

@@ -1,0 +1,102 @@
+<mat-sidenav-container class="aside-nav">
+  <!-- Mobile menu: Top bar with logo and hamburger -->
+  <div *ngIf="isMobile" class="aside-nav__container__mobile__header">
+    <img
+      class="aside-nav__container__mobile__header__logo"
+      src="assets/svg/logo.svg"
+      alt="Beekeeper"
+    />
+    <mat-icon
+      class="aside-nav__container__mobile__header__hamburger"
+      (click)="toggleSidenav()"
+      >menu</mat-icon
+    >
+  </div>
+
+  <!-- PC menu: Sidebar navigation -->
+  <mat-sidenav
+    *ngIf="!isMobile"
+    [disableClose]="true"
+    mode="side"
+    opened
+    class="aside-nav__container"
+  >
+    <div class="aside-nav__container__header">
+      <img
+        class="aside-nav__container__mobile__header__logo"
+        src="assets/svg/logo.svg"
+        alt="Beekeeper"
+      />
+      <h1 class="aside-nav__container__header__title">Beekeeper</h1>
+    </div>
+
+    <nav class="aside-nav__container__menu">
+      <mat-nav-list>
+        <mat-list-item
+          *ngFor="let item of items()"
+          (click)="navigateTo(item.link)"
+          class="aside-nav__container__menu__item"
+          [ngClass]="{
+            'aside-nav__container__menu__item__active': isActive(item.link)
+          }"
+        >
+          <mat-icon class="aside-nav__container__menu__item__icon">{{
+            item.icon
+          }}</mat-icon>
+          <span class="aside-nav__container__menu__item__label">
+            {{ item.label }}
+          </span>
+        </mat-list-item>
+      </mat-nav-list>
+    </nav>
+
+    <div class="aside-nav__container__footer">
+      <app-button color="primary" (click)="logout()">
+        Déconnexion
+        <mat-icon> logout </mat-icon>
+      </app-button>
+    </div>
+  </mat-sidenav>
+
+  <!-- Mobile menu: Sidebar navigation -->
+  <mat-sidenav
+    *ngIf="isMobile"
+    [(opened)]="sidenavOpened"
+    [mode]="'over'"
+    class="aside-nav__container"
+  >
+    <mat-icon
+      class="aside-nav__container__mobile__close"
+      (click)="toggleSidenav()"
+      >close
+    </mat-icon>
+
+    <div class="aside-nav__container__menu--mobile">
+      <mat-nav-list>
+        <mat-list-item
+          *ngFor="let item of items()"
+          (click)="navigateTo(item.link)"
+          class="aside-nav__container__menu__item--mobile"
+          [ngClass]="{
+            'aside-nav__container__menu__item__active--mobile': isActive(
+              item.link
+            )
+          }"
+        >
+          <mat-icon class="aside-nav__container__menu__item__icon">{{
+            item.icon
+          }}</mat-icon>
+          <span class="aside-nav__container__menu__item__label">
+            {{ item.label }}
+          </span>
+        </mat-list-item>
+      </mat-nav-list>
+    </div>
+    <div class="aside-nav__container__footer">
+      <app-button color="primary" (click)="logout()">
+        Déconnexion
+        <mat-icon> logout </mat-icon>
+      </app-button>
+    </div>
+  </mat-sidenav>
+</mat-sidenav-container>
