@@ -3,6 +3,7 @@
   <form class="connexion__div__form" [formGroup]="form" (submit)="connexion()">
     <div class="connexion__div__form__content">
       <app-input
+        subscriptSizing="dynamic"
         class="connexion__div__form__content__input"
         [formControl]="form.controls.email"
         [errorMessages]="{
@@ -12,6 +13,7 @@
         Email
       </app-input>
       <app-input
+        subscriptSizing="dynamic"
         class="connexion__div__form__content__input"
         [formControl]="form.controls.password"
         [errorMessages]="{

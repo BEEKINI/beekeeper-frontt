@@ -43,12 +43,15 @@ export class ConnexionComponent {
 
   protected connexion(): void {
     this.authQueries
-      .login(this.form.controls.email.value, this.form.controls.password.value)
+      .login({
+        email: this.form.controls.email.value,
+        password: this.form.controls.password.value,
+      })
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((result) => {
         if (result) {
           this.userService.setCurrentUser(result);
-          this.router.navigateByUrl('/dashbord');
+          this.router.navigateByUrl('/dashboard');
         }
       });
   }

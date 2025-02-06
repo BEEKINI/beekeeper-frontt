@@ -5,7 +5,11 @@
     alt="Beekeeper"
   />
 
-  <form class="inscription__form__form" [formGroup]="form" (click)="register()">
+  <form
+    class="inscription__form__form"
+    [formGroup]="form"
+    (submit)="register()"
+  >
     <div class="inscription__form__form__content">
       <app-input
         class="inscription__form__form__content__input"
@@ -48,7 +52,7 @@
         subscriptSizing="dynamic"
         type="password"
         class="inscription__form__form__content__input"
-        [formControl]="form.controls.confirmPassword"
+        [formControl]="form.controls.password_confirmation"
         [errorMessages]="{
           minlength: 'Le mot de passe doit contenir au moins 8 caractères'
         }"

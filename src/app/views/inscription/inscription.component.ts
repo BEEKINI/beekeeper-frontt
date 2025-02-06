@@ -17,7 +17,7 @@ interface InscriptionForm {
   lastname: FormControl<string>;
   email: FormControl<string>;
   password: FormControl<string>;
-  confirmPassword: FormControl<string>;
+  password_confirmation: FormControl<string>;
 }
 
 @Component({
@@ -45,7 +45,7 @@ export class InscriptionComponent {
       nonNullable: true,
       validators: [Validators.required, Validators.minLength(8)],
     }),
-    confirmPassword: new FormControl<string>('', {
+    password_confirmation: new FormControl<string>('', {
       nonNullable: true,
       validators: [Validators.required, Validators.minLength(8)],
     }),
@@ -63,12 +63,13 @@ export class InscriptionComponent {
         lastname: this.form.controls.lastname.value,
         email: this.form.controls.email.value,
         password: this.form.controls.password.value,
+        password_confirmation: this.form.controls.password_confirmation.value,
       })
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((result) => {
         if (result) {
           this.userService.setCurrentUser(result);
-          this.router.navigateByUrl('/dashbord');
+          this.router.navigateByUrl('/dashboard');
         }
       });
   }
