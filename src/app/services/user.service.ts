@@ -5,8 +5,8 @@ type UserRole = 'ADMIN' | 'USER';
 
 export interface User {
   id?: number;
-  lastName: string;
-  firstName: string;
+  lastname: string;
+  firstname: string;
   email: string;
   role?: UserRole;
   password: string;
