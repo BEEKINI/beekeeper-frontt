@@ -13,8 +13,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { UserService } from '../../services/user.service';
 
 interface InscriptionForm {
-  firstName: FormControl<string>;
-  lastName: FormControl<string>;
+  firstname: FormControl<string>;
+  lastname: FormControl<string>;
   email: FormControl<string>;
   password: FormControl<string>;
   confirmPassword: FormControl<string>;
@@ -29,11 +29,11 @@ interface InscriptionForm {
 })
 export class InscriptionComponent {
   protected readonly form = new FormGroup<InscriptionForm>({
-    firstName: new FormControl<string>('', {
+    firstname: new FormControl<string>('', {
       nonNullable: true,
       validators: [Validators.required],
     }),
-    lastName: new FormControl<string>('', {
+    lastname: new FormControl<string>('', {
       nonNullable: true,
       validators: [Validators.required],
     }),
@@ -59,8 +59,8 @@ export class InscriptionComponent {
   protected register(): void {
     this.authQueries
       .register({
-        firstName: this.form.controls.firstName.value,
-        lastName: this.form.controls.lastName.value,
+        firstname: this.form.controls.firstname.value,
+        lastname: this.form.controls.lastname.value,
         email: this.form.controls.email.value,
         password: this.form.controls.password.value,
       })
