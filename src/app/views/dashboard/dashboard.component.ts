@@ -1,16 +1,35 @@
-import { Component } from '@angular/core';
-import {
-  AsideNavComponent,
-  AsideNavItem,
-} from '../../shared/components/aside-nav/aside-nav.component';
-import { RouterOutlet } from '@angular/router';
+import { Component, DestroyRef, inject } from '@angular/core';
+import { Router, RouterOutlet } from '@angular/router';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { NgClass, NgFor, NgIf } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { ButtonComponent } from '../../shared/components/button/button.component';
+import { TokenService } from '../../services/token.service';
+
+export interface AsideNavItem {
+  icon: string;
+  label: string;
+  link: string;
+}
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [AsideNavComponent, RouterOutlet],
+  imports: [
+    RouterOutlet,
+    NgClass,
+    ButtonComponent,
+    MatSidenavModule,
+    MatIconModule,
+    MatListModule,
+    NgFor,
+    NgClass,
+    NgIf,
+  ],
   templateUrl: './dashboard.component.html',
-  styleUrl: './dashboard.component.scss',
+  styleUrls: ['./dashboard.component.scss', './aside-nav.component.scss'],
 })
 export class DashboardComponent {
   protected readonly items: AsideNavItem[] = [
@@ -35,4 +54,41 @@ export class DashboardComponent {
       link: '/account',
     },
   ];
+
+  protected readonly breakpointObserver = inject(BreakpointObserver);
+  protected readonly tokenService = inject(TokenService);
+  protected readonly destroyRef = inject(DestroyRef);
+  protected readonly router = inject(Router);
+
+  protected isMobile: boolean = false;
+
+  public constructor() {
+    this.breakpointObserver
+      .observe([Breakpoints.Handset, Breakpoints.Tablet])
+      .subscribe((result) => {
+        this.isMobile = result.matches;
+      });
+  }
+
+  protected sidenavOpened: boolean = false;
+
+  protected navigateTo(link: string): void {
+    this.router.navigateByUrl(link);
+    if (this.isMobile) {
+      this.sidenavOpened = false;
+    }
+  }
+
+  protected isActive(link: string): boolean {
+    return this.router.url === link;
+  }
+
+  protected logout(): void {
+    this.tokenService.setToken(null);
+    this.router.navigateByUrl('/connexion');
+  }
+
+  protected toggleSidenav(): void {
+    this.sidenavOpened = !this.sidenavOpened;
+  }
 }

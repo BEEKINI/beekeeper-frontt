@@ -1,0 +1,4 @@
+@use "./dashboard/aside-nav-theme";
+@mixin theme($theme) {
+  @include aside-nav-theme.theme($theme);
+}

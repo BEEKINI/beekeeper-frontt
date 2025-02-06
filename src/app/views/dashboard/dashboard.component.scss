@@ -1,15 +1,30 @@
+@use "./aside-nav.component.scss" as aside;
+
 .dashboard {
   display: flex;
   height: 100vh;
 
-  &__aside-nav {
-    width: 250px;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  &__mobile {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__mobile-header {
+    @include aside.header();
+
+    &__logo {
+      @include aside.logo();
+    }
+
+    &__hamburger {
+      @include aside.hamburger();
+    }
   }
 
   &__content {
     flex: 1;
     padding: 16px;
     overflow: auto;
+    margin-top: 70px;
   }
 }

@@ -1,31 +1,68 @@
+@mixin header() {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 15px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+}
+
+@mixin logo() {
+  width: 60px;
+  height: 60px;
+}
+
+@mixin hamburger() {
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+@mixin aside-nav() {
+  width: 250px;
+  height: 100vh;
+}
+
 :host {
   ::ng-deep {
-    .mdc-list-item__primary-text {
-      display: flex;
-      align-items: center;
-    }
     .mat-drawer-inner-container {
       display: flex;
       flex-direction: column;
     }
+
+    .mat-mdc-list-item-unscoped-content {
+      display: flex;
+      align-items: center;
+    }
+
+    .mat-sidenav {
+      height: 100vh;
+      width: 100vw;
+    }
   }
 
   .aside-nav {
-    height: 100vh;
-    width: 250px;
+    @include aside-nav();
 
     &__container {
-      height: 100vh;
-      width: 250px;
+      @include aside-nav();
 
       &__header {
         display: flex;
         align-items: center;
         gap: 15px;
         padding: 1.5rem 1rem;
-        border-bottom-width: 1px;
-        border-bottom-style: solid;
+        border-bottom: 1px solid #ddd;
         text-align: center;
+
+        &__logo {
+          @include logo();
+        }
+
         &__title {
           font-size: 1.5rem;
           font-weight: bold;
@@ -34,7 +71,7 @@
       }
 
       &__menu--mobile {
-        margin-top: 50px;
+        margin-top: 70px;
       }
 
       &__menu,
@@ -50,14 +87,10 @@
           display: flex;
           align-items: center;
           gap: 15px;
+          padding: 10px;
 
-          &--mobile {
-            display: flex;
-            align-items: center;
-            cursor: pointer;
-            transition: background-color 0.2s;
-            border-radius: 4px;
-            gap: 15px;
+          &:hover {
+            background-color: rgba(0, 0, 0, 0.05);
           }
 
           &__icon {
@@ -68,40 +101,37 @@
             font-size: 1rem;
             font-weight: 500;
           }
+
+          &__active {
+            background-color: rgba(0, 0, 0, 0.1);
+            font-weight: bold;
+          }
         }
       }
 
       &__footer {
-        display: flex;
-        justify-content: center;
-        border-top-width: 1px;
-        border-top-style: solid;
-        align-items: center;
-        padding-block: 10px;
+        border-top: 1px solid #ddd;
+        padding: 10px 10px 10px 50px;
+        &--mobile {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          padding: 10px;
+          border-top: 1px solid #ddd;
+          margin-top: auto;
+        }
       }
 
       &__mobile {
         &__header {
-          position: fixed;
-          top: 0;
-          left: 0;
-          right: 0;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          padding-block: 10px;
-          padding-inline: 15px;
-          background-color: #fff;
-          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-          z-index: 10;
+          @include header();
+
           &__logo {
-            width: 60px;
-            height: 60px;
+            @include logo();
           }
 
-          &__hambuger {
-            font-size: 2rem;
-            cursor: pointer;
+          &__hamburger {
+            @include hamburger();
           }
         }
 
@@ -118,6 +148,7 @@
   @media (max-width: 900px) {
     .aside-nav {
       width: 100vw;
+
       &__container {
         width: 100vw;
       }

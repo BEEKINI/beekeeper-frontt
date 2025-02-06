@@ -4,6 +4,7 @@
 @use "./variables-material-light-theme" as light-theme;
 @use "../../app/shared/components/forms-theme";
 @use "../../app/shared/shared-theme";
+@use "../../app/views/view-theme";
 
 @function define-typography-config(
   // todo changer la font
@@ -133,6 +134,7 @@ html {
   @include color($light-theme);
   @include forms-theme.theme($light-theme);
   @include shared-theme.theme($light-theme);
+  @include view-theme.theme($light-theme);
   @include mat.button-toggle-density(-1);
   @include mat.table-density(-3);
 }
