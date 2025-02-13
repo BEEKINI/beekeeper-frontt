@@ -16,6 +16,8 @@ jobs:
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
+        with:
+          node-version: '22'
 
       - name: Install dependencies
         run: yarn install
@@ -26,11 +28,14 @@ jobs:
       - name: Check TypeScript version (debugging)
         run: npx tsc --version
 
-      - name: Install Angular CLI (local)
-        run: yarn add @angular/cli --dev --exact
+      - name: Ensure Angular CLI is installed locally
+        run: yarn add @angular/cli@17.2.1 --dev --exact
+
+      - name: Verify Angular CLI installation
+        run: npx ng version
 
       - name: Build Angular app
-        run: ng build
+        run: npx ng build
 
   # Si le build réussit et que c'est sur main, on build et push Docker
   docker:
