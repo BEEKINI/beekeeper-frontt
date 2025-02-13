@@ -6,7 +6,7 @@ on:
       - '**'  # Déclenchement sur toutes les branches
 
 jobs:
-    test-build:
+  test-build:
     name: Test Build Angular
     runs-on: ubuntu-latest
 
@@ -36,7 +36,7 @@ jobs:
 
       - name: Build Angular app
         run: yarn ng build --configuration=production
-        
+
   docker:
     name: Build & Push Docker Image
     runs-on: ubuntu-latest
@@ -79,25 +79,20 @@ jobs:
           ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
           set -e
           echo "🔍 Vérification de l'installation de Docker et Docker Compose..."
-          
-          # Vérification et installation de Docker si nécessaire
           if ! command -v docker &> /dev/null; then
             echo "❌ Docker n'est pas installé. Installation en cours..."
             curl -fsSL https://get.docker.com | sh
-            sudo usermod -aG docker $USER
           fi
 
-          # Vérification et installation de Docker Compose (version standalone si nécessaire)
-          if ! docker compose version &> /dev/null; then
+          if ! command -v docker-compose &> /dev/null; then
             echo "❌ Docker Compose n'est pas installé. Installation en cours..."
-            sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-            sudo chmod +x /usr/local/bin/docker-compose
+            sudo apt-get install -y docker-compose
           fi
 
           echo "📦 Mise à jour et redémarrage du conteneur..."
           cd /home/ubuntu/Beekeeper
-          docker compose pull
-          docker compose up -d --force-recreate
+          docker-compose pull
+          docker-compose up -d --force-recreate
           
           echo "✅ Déploiement terminé. Liste des conteneurs actifs :"
           docker ps
