@@ -1,4 +1,4 @@
-@use "../../../../theme/utils";
+@use "../../../theme/utils";
 
 @mixin theme($theme) {
   $primary-palette: utils.get-palette($theme, primary);

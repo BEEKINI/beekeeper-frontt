@@ -1,7 +1,18 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { User } from '../services/user.service';
+import { Token } from '../services/token.service';
+
+type UserRole = 'ADMIN' | 'USER';
+
+export interface User {
+  id?: number;
+  lastname: string;
+  firstname: string;
+  email: string;
+  role?: UserRole;
+  password: string;
+}
 
 interface UserRegister extends User {
   password_confirmation: string;
@@ -21,7 +32,7 @@ export class AuthQueries {
     return this.http.post<User>(`${this.baseUrl}/register`, user);
   }
 
-  public login(user: UserLogin): Observable<User> {
-    return this.http.post<User>(`${this.baseUrl}/login`, user);
+  public login(user: UserLogin): Observable<Token> {
+    return this.http.post<Token>(`${this.baseUrl}/login`, user);
   }
 }

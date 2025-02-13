@@ -2,6 +2,11 @@ import { Routes } from '@angular/router';
 import { ConnexionComponent } from './views/connexion/connexion.component';
 import { InscriptionComponent } from './views/inscription/inscription.component';
 import { DashboardComponent } from './views/dashboard/dashboard.component';
+import { AuthGuard } from './guards/auth-guard';
+import { MapComponent } from './views/map/map.component';
+import { ApiariesComponent } from './views/apiaries/apiaries.component';
+import { SwarmsParamComponent } from './views/swarms-param/swarms-param.component';
+import { AccountComponent } from './views/account/account.component';
 export const routes: Routes = [
   {
     path: 'inscription',
@@ -16,9 +21,29 @@ export const routes: Routes = [
   {
     path: 'dashboard',
     component: DashboardComponent,
-    pathMatch: 'full',
+    canActivate: [AuthGuard],
     children: [
-      // todo add children when dev each tabs
+      {
+        path: '',
+        redirectTo: 'map',
+        pathMatch: 'full',
+      },
+      {
+        path: 'map',
+        component: MapComponent,
+      },
+      {
+        path: 'apiaries',
+        component: ApiariesComponent,
+      },
+      {
+        path: 'swarms-param',
+        component: SwarmsParamComponent,
+      },
+      {
+        path: 'account',
+        component: AccountComponent,
+      },
     ],
   },
   {

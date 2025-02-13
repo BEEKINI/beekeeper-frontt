@@ -10,7 +10,6 @@ import {
 import { Router } from '@angular/router';
 import { AuthQueries } from '../../queries/auth.queries';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { UserService } from '../../services/user.service';
 
 interface InscriptionForm {
   firstname: FormControl<string>;
@@ -54,7 +53,6 @@ export class InscriptionComponent {
   protected readonly router = inject(Router);
   protected readonly authQueries = inject(AuthQueries);
   protected readonly destroyRef = inject(DestroyRef);
-  protected readonly userService = inject(UserService);
 
   protected register(): void {
     this.authQueries
@@ -68,8 +66,7 @@ export class InscriptionComponent {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((result) => {
         if (result) {
-          this.userService.setCurrentUser(result);
-          this.router.navigateByUrl('/dashboard');
+          this.router.navigateByUrl('/connexion');
         }
       });
   }

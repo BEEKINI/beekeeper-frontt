@@ -9,8 +9,8 @@ import {
 import { ButtonComponent } from '../../shared/components/button/button.component';
 import { Router } from '@angular/router';
 import { AuthQueries } from '../../queries/auth.queries';
-import { UserService } from '../../services/user.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { TokenService } from '../../services/token.service';
 
 interface ConnexionForm {
   email: FormControl<string>;
@@ -39,7 +39,7 @@ export class ConnexionComponent {
   protected readonly router = inject(Router);
   protected readonly authQueries = inject(AuthQueries);
   protected readonly destroyRef = inject(DestroyRef);
-  protected readonly userService = inject(UserService);
+  protected readonly tokenService = inject(TokenService);
 
   protected connexion(): void {
     this.authQueries
@@ -50,7 +50,7 @@ export class ConnexionComponent {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((result) => {
         if (result) {
-          this.userService.setCurrentUser(result);
+          this.tokenService.setToken(result);
           this.router.navigateByUrl('/dashboard');
         }
       });
