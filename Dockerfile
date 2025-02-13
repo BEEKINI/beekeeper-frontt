@@ -7,13 +7,15 @@ WORKDIR /app
 RUN corepack enable && corepack prepare yarn@stable --activate
 
 # Copier les fichiers de dépendances
-COPY package.json yarn.lock ./
+COPY package.json ./
 
 # 🔹 Solution : Forcer Yarn à utiliser node_modules
 RUN yarn config set nodeLinker node-modules
 
+RUN yarn install --mode update-lockfile
+
 # Installer les dépendances
-RUN yarn install --frozen-lockfile
+RUN yarn
 
 # Copier le reste du projet
 COPY . .
