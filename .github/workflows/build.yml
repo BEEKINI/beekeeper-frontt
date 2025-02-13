@@ -17,7 +17,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 'latest'
+          node-version: '22'
 
       - name: Activer Corepack et préparer Yarn stable
         run: |
