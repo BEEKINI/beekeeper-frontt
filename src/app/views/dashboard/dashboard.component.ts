@@ -36,22 +36,22 @@ export class DashboardComponent {
     {
       icon: 'map',
       label: 'Carte',
-      link: '/map',
+      link: '/dashboard/map',
     },
     {
       label: 'Liste des ruchers',
       icon: 'inventory_2',
-      link: '/apiaries',
+      link: '/dashboard/apiaries',
     },
     {
       label: 'Paramétrage essaims',
       icon: 'settings',
-      link: '/swarms-param',
+      link: '/dashboard/swarms-param',
     },
     {
       label: 'Mon compte',
       icon: 'account_circle',
-      link: '/account',
+      link: '/dashboard/account',
     },
   ];
 

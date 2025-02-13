@@ -22,8 +22,8 @@
   cursor: pointer;
 }
 
-@mixin aside-nav() {
-  width: 250px;
+@mixin aside-nav($width: 250px) {
+  width: $width;
   height: 100vh;
 }
 
@@ -46,7 +46,7 @@
   }
 
   .aside-nav {
-    @include aside-nav();
+    @include aside-nav(100vw);
 
     &__container {
       @include aside-nav();
