@@ -44,3 +44,6 @@ Thumbs.db
 
 /yarn.lock
 /package-lock.json
+.yarnrc.yml
+
+.yarn/install-state.gz
