@@ -16,17 +16,18 @@ jobs:
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
-        with:
-          node-version: '22'
+
+      - name: Activer Corepack
+        run: npm install -g corepack
+
+      - name: Préparer Yarn stable
+        run: yarn set version stable
 
       - name: Install dependencies
-        run: yarn install
-
-      - name: Ensure Angular CLI is installed locally
-        run: yarn add @angular/cli
+        run: yarn install --frozen-lockfile
 
       - name: Build Angular app
-        run: ng build
+        run: yarn run ng build --configuration=production
 
   docker:
     name: Build & Push Docker Image
