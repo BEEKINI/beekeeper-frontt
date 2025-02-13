@@ -17,7 +17,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18' # Version stable et supportée
+          node-version: 'latest'
 
       - name: Activer Corepack et préparer Yarn stable
         run: |
@@ -25,14 +25,14 @@ jobs:
           corepack enable
           yarn set version stable
 
-      - name: Configurer Yarn pour utiliser `node_modules`
+      - name: Vérifier et configurer Yarn
         run: yarn config set nodeLinker node-modules
 
-      - name: Installer les dépendances
-        run: yarn install
-
-      - name: Vérifier la présence de `node_modules`
-        run: ls -la node_modules || echo "⚠️ node_modules est manquant !"
+      - name: Installer les dépendances sans `yarn.lock`
+        run: yarn install --mode update-lockfile
+        
+      - name: Vérifier les dépendances
+        run: yarn 
 
       - name: Build Angular app
         run: yarn ng build --configuration=production
