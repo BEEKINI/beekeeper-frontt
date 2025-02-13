@@ -6,7 +6,7 @@ on:
       - '**'  # Déclenchement sur toutes les branches
 
 jobs:
-  test-build:
+    test-build:
     name: Test Build Angular
     runs-on: ubuntu-latest
 
@@ -26,15 +26,17 @@ jobs:
           yarn set version stable
 
       - name: Vérifier et configurer Yarn
-        run: |
-          yarn config set nodeLinker node-modules
+        run: yarn config set nodeLinker node-modules
+
+      - name: Vérifier si yarn.lock est présent
+        run: test -f yarn.lock || yarn install --check-cache --update-checksums
 
       - name: Installer les dépendances
-        run: yarn install --immutable-if-present
+        run: yarn install --immutable
 
       - name: Build Angular app
         run: yarn ng build --configuration=production
-
+        
   docker:
     name: Build & Push Docker Image
     runs-on: ubuntu-latest
