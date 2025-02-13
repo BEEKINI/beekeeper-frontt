@@ -1,0 +1,12 @@
+<h1 mat-dialog-title>Ajouter un rucher</h1>
+<div mat-dialog-content>
+  <div class="map-add-apiary__data">
+    <p>Latitude {{ data.lng.toFixed(4) }}</p>
+    <p>Longitude {{ data.lng.toFixed(4) }}</p>
+  </div>
+  <app-input [formControl]="form"> Donner un nom au rucher </app-input>
+</div>
+<div mat-dialog-actions>
+  <app-button (click)="onNoClick()">Annuler</app-button>
+  <app-button (click)="confirm()" color="primary">Ajouter</app-button>
+</div>

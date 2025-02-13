@@ -1,0 +1,14 @@
+:host {
+  .map-add-apiary {
+    &__data {
+      display: flex;
+      gap: 15px;
+    }
+  }
+  ::ng-deep {
+    .mat-mdc-dialog-actions {
+      justify-content: end;
+      gap: 5px;
+    }
+  }
+}

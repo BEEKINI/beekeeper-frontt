@@ -26,4 +26,10 @@ export class TokenService {
   public isAuthenticated(): boolean {
     return !!this.#currentTokenSubject.value;
   }
+
+  public getHeadersForRequest(): Record<string, string> {
+    return {
+      Authorization: `${this.getToken()?.token_type} ${this.getToken()?.access_token}`,
+    };
+  }
 }

@@ -1,7 +1,9 @@
 import type { HttpClient, HttpParams } from '@angular/common/http';
+import { inject } from '@angular/core';
 
 import type { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { TokenService } from '../services/token.service';
 
 export type DataSourceFilters = Record<
   string,
@@ -18,6 +20,8 @@ const TOTAL_COUNT = 'total-count';
 const RESPONSE = 'response';
 
 export abstract class ReadOnlyQueryService<D, Q extends QueryParams> {
+  protected readonly tokenService = inject(TokenService);
+
   protected constructor(
     protected readonly http: HttpClient,
     protected readonly url: string,
@@ -28,6 +32,7 @@ export abstract class ReadOnlyQueryService<D, Q extends QueryParams> {
       .head(this.url, {
         observe: RESPONSE,
         params,
+        headers: this.tokenService.getHeadersForRequest(),
       })
       .pipe(
         map((response) => {
@@ -41,6 +46,7 @@ export abstract class ReadOnlyQueryService<D, Q extends QueryParams> {
       .get<D>(this.url, {
         observe: RESPONSE,
         params,
+        headers: this.tokenService.getHeadersForRequest(),
       })
       .pipe(
         map((response) => {
@@ -50,6 +56,8 @@ export abstract class ReadOnlyQueryService<D, Q extends QueryParams> {
   }
 
   public read(id: number): Observable<D> {
-    return this.http.get<D>(`${this.url}/${id}`);
+    return this.http.get<D>(`${this.url}/${id}`, {
+      headers: this.tokenService.getHeadersForRequest(),
+    });
   }
 }
