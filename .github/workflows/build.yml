@@ -20,8 +20,14 @@ jobs:
       - name: Install dependencies
         run: yarn install
 
-      - name: Install Angular CLI
-        run: yarn global add @angular/cli
+      - name: Ensure correct TypeScript version
+        run: yarn add typescript@5.4.5 --dev --exact
+
+      - name: Check TypeScript version (debugging)
+        run: npx tsc --version
+
+      - name: Install Angular CLI (local)
+        run: yarn add @angular/cli --dev --exact
 
       - name: Build Angular app
         run: ng build
