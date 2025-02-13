@@ -28,8 +28,11 @@ jobs:
       - name: Vérifier et configurer Yarn
         run: yarn config set nodeLinker node-modules
 
-      - name: Vérifier si yarn.lock est présent
-        run: test -f yarn.lock || yarn install --check-cache --update-checksums
+      - name: Vérifier et installer les dépendances si `yarn.lock` est absent
+        run: |
+          if [ ! -f yarn.lock ]; then
+            yarn install --check-cache
+          fi
 
       - name: Installer les dépendances
         run: yarn install --immutable
