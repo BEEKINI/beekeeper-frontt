@@ -173,7 +173,6 @@
         outline-color: utils.get-color($palette, $hue),
       )
     );
-    // @include ripple-color(utils.get-color($palette, $hue));
   }
 }
 
