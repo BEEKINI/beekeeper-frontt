@@ -1,0 +1,42 @@
+<app-label [for]="id" [required]="required"><ng-content /></app-label>
+<mat-form-field
+  [appearance]="formFieldAppearance"
+  [subscriptSizing]="subscriptSizing"
+>
+  <mat-select
+    [panelWidth]="panelWidth === 'matchTrigger' ? 'auto' : null"
+    [multiple]="multiple"
+    [compareWith]="compareWithFn"
+    [formControl]="control"
+    [placeholder]="placeholder"
+    #select="matSelect"
+  >
+    <mat-select-trigger *ngIf="trigger">
+      <ng-container
+        [ngTemplateOutlet]="
+          triggerTemplate ?? optionTemplate ?? defaultTriggerTemplate
+        "
+        [ngTemplateOutletContext]="{ $implicit: trigger }"
+      />
+      <ng-template #defaultTriggerTemplate>
+        {{ select.triggerValue }}
+      </ng-template>
+    </mat-select-trigger>
+    <mat-option
+      *ngFor="let option of options; trackBy: trackByFn"
+      [value]="option.value"
+    >
+      <ng-container
+        [ngTemplateOutlet]="optionTemplate ?? defaultTemplate"
+        [ngTemplateOutletContext]="{ $implicit: option }"
+      />
+      <ng-template #defaultTemplate let-option>
+        {{ option.label }}
+      </ng-template>
+    </mat-option>
+  </mat-select>
+  <mat-hint *ngIf="hint">{{ hint }}</mat-hint>
+  <mat-error *ngIf="errorMessage">
+    {{ errorMessage }}
+  </mat-error>
+</mat-form-field>

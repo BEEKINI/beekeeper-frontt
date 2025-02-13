@@ -1,0 +1,37 @@
+@use "./aside-nav.component.scss" as aside;
+
+@mixin content() {
+  flex: 1;
+  padding: 16px;
+  overflow: auto;
+}
+
+.dashboard {
+  display: flex;
+  height: 100vh;
+
+  &__mobile {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__mobile-header {
+    @include aside.header();
+
+    &__logo {
+      @include aside.logo();
+    }
+
+    &__hamburger {
+      @include aside.hamburger();
+    }
+  }
+
+  &__content {
+    @include content();
+    &__mobile {
+      @include content();
+      margin-top: 70px;
+    }
+  }
+}

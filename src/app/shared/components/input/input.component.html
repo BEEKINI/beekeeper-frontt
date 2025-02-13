@@ -1,0 +1,60 @@
+<ng-container [ngSwitch]="type">
+  <ng-template ngSwitchCase="checkbox">
+    <mat-checkbox [formControl]="control" [tabIndex]="tabIndex">
+      <ng-container [ngTemplateOutlet]="content" />
+    </mat-checkbox>
+  </ng-template>
+  <ng-template ngSwitchCase="textarea">
+    <app-label [for]="id" [required]="required"
+      ><ng-container [ngTemplateOutlet]="content"
+    /></app-label>
+    <mat-form-field
+      [appearance]="formFieldAppearance"
+      [subscriptSizing]="subscriptSizing"
+    >
+      <textarea
+        class="app-input__text-area"
+        matInput
+        [tabIndex]="tabIndex"
+        [formControl]="control"
+        [placeholder]="placeholder"
+      ></textarea>
+      <mat-hint *ngIf="hint" [ngClass]="hintClass">{{ hint }}</mat-hint>
+      <mat-error *ngIf="errorMessage">
+        {{ errorMessage }}
+      </mat-error>
+    </mat-form-field>
+  </ng-template>
+  <ng-template ngSwitchDefault>
+    <app-label [for]="id" [required]="required"
+      ><ng-container [ngTemplateOutlet]="content"
+    /></app-label>
+    <mat-form-field
+      [appearance]="formFieldAppearance"
+      [subscriptSizing]="subscriptSizing"
+    >
+      <input
+        matInput
+        [tabIndex]="tabIndex"
+        [formControl]="control"
+        [type]="_type"
+        [min]="min"
+        [max]="max"
+        [placeholder]="placeholder"
+        [matAutocomplete]="matAutocomplete!"
+        [matAutocompleteDisabled]="!matAutocomplete"
+      />
+      <mat-hint *ngIf="hint" [ngClass]="hintClass">{{ hint }}</mat-hint>
+      <mat-error *ngIf="errorMessage">
+        {{ errorMessage }}
+      </mat-error>
+      <div matSuffix>
+        <ng-content select="[matSuffix]"></ng-content>
+      </div>
+    </mat-form-field>
+  </ng-template>
+</ng-container>
+
+<ng-template #content>
+  <ng-content></ng-content>
+</ng-template>

@@ -1,0 +1,74 @@
+$dark-text: #333333;
+$dark-primary-text: rgba($dark-text, 0.87);
+$dark-dividers: #cccccc;
+
+$foreground: (
+  base: black,
+  text: $dark-primary-text,
+  divider: $dark-dividers,
+  mat-dialog-title: $dark-primary-text,
+  mat-dialog-content: $dark-primary-text,
+  mat-dialog-actions: $dark-primary-text,
+);
+
+$background-color: #fafffe;
+$light-background: #ffffff;
+$light-bg-darker-5: darken($light-background, 5%);
+$light-bg-lighter-5: lighten($light-background, 5%);
+
+$background: (
+  background: $background-color,
+  background-contrasted: $light-bg-darker-5,
+  card: $light-bg-lighter-5,
+  dialog: $light-bg-lighter-5,
+  light: $light-background,
+);
+
+$light-primary-text: #ffffff;
+
+$primary: (
+  lighter: #bfc2c4,
+  300: #515151,
+  400: #343e44,
+  default: #616161,
+  darker: #1b2225,
+
+  contrast: (
+    lighter: $light-primary-text,
+    300: #bbb,
+    400: $light-primary-text,
+    default: $light-primary-text,
+    darker: $light-primary-text,
+    variant: $light-primary-text,
+  ),
+);
+
+$accent: (
+  lighter: #d9edf6,
+  default: #d63939,
+  success: #4caf50,
+  primary: #ec7f20,
+  // todo not used yet
+  darker: darkviolet,
+
+  contrast: (
+    lighter: #31708f,
+    default: $light-primary-text,
+    darker: $light-primary-text,
+    success: $light-primary-text,
+    light-blue: $light-primary-text,
+    dark-blue: $light-primary-text,
+  ),
+);
+
+$warn: (
+  default: #d32f2f,
+  lighter: #f6bd4e,
+  darker: #ac2925,
+
+  contrast: (
+    default: $light-primary-text,
+    lighter: $light-primary-text,
+    darker: $light-primary-text,
+  ),
+);

@@ -1,0 +1,77 @@
+<div class="inscription__form">
+  <img
+    class="inscription__form__logo"
+    src="assets/svg/logo.svg"
+    alt="Beekeeper"
+  />
+
+  <form
+    class="inscription__form__form"
+    [formGroup]="form"
+    (submit)="register()"
+  >
+    <div class="inscription__form__form__content">
+      <app-input
+        class="inscription__form__form__content__input"
+        subscriptSizing="dynamic"
+        [formControl]="form.controls.lastname"
+      >
+        Prénom
+      </app-input>
+      <app-input
+        class="inscription__form__form__content__input"
+        subscriptSizing="dynamic"
+        [formControl]="form.controls.firstname"
+      >
+        Nom
+      </app-input>
+      <app-input
+        type="email"
+        class="inscription__form__form__content__input"
+        subscriptSizing="dynamic"
+        [formControl]="form.controls.email"
+        [errorMessages]="{
+          email: 'Entrez une adresse email valide'
+        }"
+      >
+        Email
+      </app-input>
+
+      <app-input
+        type="password"
+        class="inscription__form__form__content__input"
+        subscriptSizing="dynamic"
+        [formControl]="form.controls.password"
+        [errorMessages]="{
+          minlength: 'Le mot de passe doit contenir au moins 8 caractères'
+        }"
+      >
+        Mot de passe
+      </app-input>
+      <app-input
+        subscriptSizing="dynamic"
+        type="password"
+        class="inscription__form__form__content__input"
+        [formControl]="form.controls.password_confirmation"
+        [errorMessages]="{
+          minlength: 'Le mot de passe doit contenir au moins 8 caractères'
+        }"
+      >
+        Confimer le mot de passe
+      </app-input>
+    </div>
+    <app-button
+      class="inscription__form__form__register"
+      color="primary"
+      type="submit"
+    >
+      S'inscrire
+    </app-button>
+  </form>
+
+  <div class="inscription__form__links">
+    <p class="inscription__form__links__link" (click)="goToConnexion()">
+      Vous avez déjà un compte ?
+    </p>
+  </div>
+</div>

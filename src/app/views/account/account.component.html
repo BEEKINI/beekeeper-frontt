@@ -1,0 +1,40 @@
+<div class="account__container">
+  <h4 class="account__container__title">Mes informations</h4>
+  <mat-divider class="account__container__divider"></mat-divider>
+
+  <div class="account__container__content">
+    <app-input
+      class="account__container__content__input"
+      [formControl]="form.controls.firstname"
+    >
+      Prénom
+    </app-input>
+    <app-input
+      class="account__container__content__input"
+      [formControl]="form.controls.lastname"
+    >
+      Nom
+    </app-input>
+    <app-input
+      class="account__container__content__input"
+      type="email"
+      [formControl]="form.controls.email"
+    >
+      Email
+    </app-input>
+    <app-input
+      class="account__container__content__input"
+      type="password"
+      [formControl]="form.controls.password"
+    >
+      Mot de passe
+    </app-input>
+    <app-input
+      class="account__container__content__input"
+      type="password"
+      [formControl]="form.controls.password_confirmation"
+    >
+      Confirmer le mot de passe
+    </app-input>
+  </div>
+</div>

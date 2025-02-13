@@ -1,0 +1,7 @@
+.app-label {
+  display: initial;
+
+  &--required:not(:empty)::after {
+    content: " *";
+  }
+}

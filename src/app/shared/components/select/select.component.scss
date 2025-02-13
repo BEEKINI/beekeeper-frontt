@@ -1,0 +1,10 @@
+:host {
+  ::ng-deep {
+    .mdc-text-field--outlined:not(.mdc-text-field--disabled) {
+      background: var(--app-select-background-color, white);
+    }
+    .mat-mdc-select {
+      color: var(--app-select-color, --mat-select-enabled-trigger-text-color);
+    }
+  }
+}
