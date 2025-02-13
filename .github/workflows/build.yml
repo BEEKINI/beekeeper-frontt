@@ -41,6 +41,7 @@ jobs:
     name: Build & Push Docker Image
     runs-on: ubuntu-latest
     needs: test-build
+    if: github.ref == 'refs/heads/main'
 
     steps:
       - name: Checkout repository
@@ -62,6 +63,7 @@ jobs:
     name: Deploy to VPS
     runs-on: ubuntu-latest
     needs: docker
+    if: github.ref == 'refs/heads/main'
 
     steps:
       - name: Checkout repository
@@ -69,7 +71,7 @@ jobs:
 
       - name: Add SSH key and known hosts
         run: |
-          mkdir -p ~/.ssh 
+          mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
