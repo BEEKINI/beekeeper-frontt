@@ -28,8 +28,8 @@ jobs:
       - name: Vérifier et configurer Yarn
         run: yarn config set nodeLinker node-modules
 
-      - name: Générer le fichier `yarn.lock`
-        run: yarn install --immutable
+      - name: Installer les dépendances sans `yarn.lock`
+        run: yarn install --mode update-lockfile
 
       - name: Build Angular app
         run: yarn ng build --configuration=production
