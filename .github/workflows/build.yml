@@ -16,18 +16,24 @@ jobs:
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
+        with:
+          node-version: 'latest'
 
-      - name: Activer Corepack
-        run: npm install -g corepack
+      - name: Activer Corepack et préparer Yarn stable
+        run: |
+          npm install -g corepack
+          corepack enable
+          yarn set version stable
 
-      - name: Préparer Yarn stable
-        run: yarn set version stable
+      - name: Vérifier et configurer Yarn
+        run: |
+          yarn config set nodeLinker node-modules
 
-      - name: Install dependencies
-        run: yarn
+      - name: Installer les dépendances
+        run: yarn install --immutable-if-present
 
       - name: Build Angular app
-        run: yarn run ng build --configuration=production
+        run: yarn ng build --configuration=production
 
   docker:
     name: Build & Push Docker Image
@@ -71,20 +77,25 @@ jobs:
           ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
           set -e
           echo "🔍 Vérification de l'installation de Docker et Docker Compose..."
+          
+          # Vérification et installation de Docker si nécessaire
           if ! command -v docker &> /dev/null; then
             echo "❌ Docker n'est pas installé. Installation en cours..."
             curl -fsSL https://get.docker.com | sh
+            sudo usermod -aG docker $USER
           fi
 
-          if ! command -v docker-compose &> /dev/null; then
+          # Vérification et installation de Docker Compose (version standalone si nécessaire)
+          if ! docker compose version &> /dev/null; then
             echo "❌ Docker Compose n'est pas installé. Installation en cours..."
-            sudo apt-get install -y docker-compose
+            sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+            sudo chmod +x /usr/local/bin/docker-compose
           fi
 
           echo "📦 Mise à jour et redémarrage du conteneur..."
           cd /home/ubuntu/Beekeeper
-          docker-compose pull
-          docker-compose up -d --force-recreate
+          docker compose pull
+          docker compose up -d --force-recreate
           
           echo "✅ Déploiement terminé. Liste des conteneurs actifs :"
           docker ps
