@@ -24,7 +24,7 @@ jobs:
         run: yarn set version stable
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: yarn install --immutable
 
       - name: Build Angular app
         run: yarn run ng build --configuration=production
