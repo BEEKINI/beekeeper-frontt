@@ -1,4 +1,4 @@
-name: Build & Test Angular App
+name: Build & Deploy Angular App
 
 on:
   push:
@@ -35,14 +35,12 @@ jobs:
         run: npx ng version
 
       - name: Build Angular app
-        run: npx ng build
+        run: npx ng build --configuration=production
 
-  # Si le build réussit et que c'est sur main, on build et push Docker
   docker:
     name: Build & Push Docker Image
     runs-on: ubuntu-latest
     needs: test-build
-    if: github.ref == 'refs/heads/main'
 
     steps:
       - name: Checkout repository
@@ -55,7 +53,47 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build Docker image
-        run: docker build -t my-docker-repo/bee-keeper:latest .
+        run: docker build -t valerianc/bee-keeper:latest .
 
       - name: Push Docker image
-        run: docker push my-docker-repo/bee-keeper:latest
+        run: docker push valerianc/bee-keeper:latest
+
+  deploy:
+    name: Deploy to VPS
+    runs-on: ubuntu-latest
+    needs: docker
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Add SSH key and known hosts
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Deploy to VPS
+        run: |
+          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
+          set -e
+          echo "🔍 Vérification de l'installation de Docker et Docker Compose..."
+          if ! command -v docker &> /dev/null; then
+            echo "❌ Docker n'est pas installé. Installation en cours..."
+            curl -fsSL https://get.docker.com | sh
+          fi
+
+          if ! command -v docker-compose &> /dev/null; then
+            echo "❌ Docker Compose n'est pas installé. Installation en cours..."
+            sudo apt-get install -y docker-compose
+          fi
+
+          echo "📦 Mise à jour et redémarrage du conteneur..."
+          cd /home/ubuntu/Beekeeper
+          docker-compose pull
+          docker-compose up -d --force-recreate
+          
+          echo "✅ Déploiement terminé. Liste des conteneurs actifs :"
+          docker ps
+          EOF
