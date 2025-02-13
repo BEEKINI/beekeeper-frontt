@@ -7,6 +7,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { ButtonComponent } from '../../shared/components/button/button.component';
 import { TokenService } from '../../services/token.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 export interface AsideNavItem {
   icon: string;
@@ -65,6 +66,7 @@ export class DashboardComponent {
   public constructor() {
     this.breakpointObserver
       .observe([Breakpoints.Handset, Breakpoints.Tablet])
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((result) => {
         this.isMobile = result.matches;
       });
