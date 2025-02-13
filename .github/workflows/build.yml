@@ -22,20 +22,11 @@ jobs:
       - name: Install dependencies
         run: yarn install
 
-      - name: Ensure correct TypeScript version
-        run: yarn add typescript@5.4.5 --dev --exact
-
-      - name: Check TypeScript version (debugging)
-        run: npx tsc --version
-
       - name: Ensure Angular CLI is installed locally
-        run: yarn add @angular/cli@17.2.1 --dev --exact
-
-      - name: Verify Angular CLI installation
-        run: npx ng version
+        run: yarn add @angular/cli
 
       - name: Build Angular app
-        run: npx ng build --configuration=production
+        run: ng build
 
   docker:
     name: Build & Push Docker Image
