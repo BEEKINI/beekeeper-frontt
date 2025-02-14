@@ -1,0 +1,38 @@
+@use "../utils";
+@use "@material/dialog/dialog-theme";
+
+@mixin color($theme-or-color-config) {
+  $background-palette: utils.get-palette($theme-or-color-config, background);
+  $foreground-palette: utils.get-palette($theme-or-color-config, foreground);
+  $divider: utils.get-color($foreground-palette, divider);
+
+  .mdc-dialog__container {
+    @include dialog-theme.container-shape(0);
+
+    .mdc-dialog {
+      &__title {
+        border-bottom-color: $divider;
+        background-color: utils.get-color(
+          $background-palette,
+          mat-dialog-title
+        );
+        color: utils.get-color($foreground-palette, mat-dialog-title);
+      }
+      &__content {
+        background-color: utils.get-color(
+          $background-palette,
+          mat-dialog-content
+        );
+        color: utils.get-color($foreground-palette, mat-dialog-content);
+      }
+      &__actions {
+        border-top-color: $divider;
+        background-color: utils.get-color(
+          $background-palette,
+          mat-dialog-actions
+        );
+        color: utils.get-color($foreground-palette, mat-dialog-actions);
+      }
+    }
+  }
+}

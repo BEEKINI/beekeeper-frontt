@@ -75,7 +75,12 @@ export class MapComponent implements AfterViewInit {
         switchMap((result: ApiariesModel) => {
           if (result) {
             return this.apiariesQueries
-              .create({ latitude: lat, longitude: lng, name: result.name })
+              .create({
+                latitude: lat,
+                longitude: lng,
+                name: result.name,
+                hives: [],
+              })
               .pipe(
                 tap((created) => {
                   this.addMarker(created.id!, lat, lng, result.name);

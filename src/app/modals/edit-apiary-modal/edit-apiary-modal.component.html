@@ -1,0 +1,24 @@
+<h2 mat-dialog-title>Edition du rucher {{ data.name }}</h2>
+<div mat-dialog-content>
+  <app-input [formControl]="form.controls.name"> Nom du rucher </app-input>
+  @if (hivesOptions.length > 0) {
+    <app-select
+      [formControl]="form.controls.hives"
+      [options]="hivesOptions"
+      [compareWith]="compareWithRuche"
+    >
+      Ruches
+    </app-select>
+  } @else {
+    <p>
+      Vous n'avez pas de ruche paramétrée, veuillez en ajouter une avant de
+      modifier le rucher.
+    </p>
+  }
+</div>
+<div mat-dialog-actions>
+  <app-button (click)="close()">Fermer</app-button>
+  <app-button [disabled]="form.invalid" color="primary" (click)="confirm()"
+    >Modifier</app-button
+  >
+</div>

@@ -1,0 +1,25 @@
+.apiary {
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    &__content {
+      display: flex;
+      flex-direction: column;
+      padding-top: 10px;
+      padding-right: 15px;
+      width: 100%;
+      &__title {
+        font-size: 20px;
+        margin: 0 0 5px;
+      }
+
+      &__divider {
+        width: 100%;
+      }
+    }
+    &__buttons {
+      display: flex;
+      gap: 5px;
+    }
+  }
+}

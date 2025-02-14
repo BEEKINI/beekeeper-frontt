@@ -1,0 +1,45 @@
+@use "../utils";
+@use "@material/dialog/dialog-theme";
+
+.cdk-overlay-container {
+  z-index: 1050 !important;
+}
+
+$padding: 15px;
+
+.mdc-dialog .mdc-dialog__container {
+  .mdc-dialog {
+    &__surface {
+      border-radius: 10px;
+      display: flex;
+      max-height: calc(100vh - 20px);
+      > * {
+        display: contents;
+        > form {
+          display: contents;
+        }
+      }
+    }
+    &__title {
+      display: flex;
+      align-items: center;
+      padding: calc(#{$padding} - 7px) $padding;
+      @include utils.border(bottom);
+      margin: 0;
+    }
+    &__content {
+      max-height: 100%;
+      overflow-y: auto;
+      padding: $padding;
+    }
+    &__actions {
+      padding: $padding;
+      @include utils.border(top);
+    }
+  }
+
+  .mat-mdc-dialog-actions {
+    justify-content: end;
+    gap: 5px;
+  }
+}
