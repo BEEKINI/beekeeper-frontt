@@ -1,0 +1,21 @@
+.swarms-param {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  &__button {
+    align-self: flex-end;
+  }
+
+  &__card {
+    &__content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      &__buttons {
+        display: flex;
+        gap: 5px;
+      }
+    }
+  }
+}

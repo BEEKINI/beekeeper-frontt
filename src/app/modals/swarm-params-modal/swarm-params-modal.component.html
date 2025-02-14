@@ -1,0 +1,26 @@
+<h1 mat-dialog-title>Ajouter un essaim</h1>
+<div mat-dialog-content>
+  <app-input [formControl]="form.controls.name">
+    Donner un nom à l'essaim
+  </app-input>
+  <app-select [formControl]="form.controls.apiary" [options]="apiariesOptions">
+    Choisir un rucher
+  </app-select>
+  @if (hivesOptions.length > 0) {
+    <app-select [formControl]="form.controls.hive" [options]="hivesOptions">
+      Choisir une ruche
+    </app-select>
+  } @else {
+    <p>Sélectionnez un rucher contenant des ruches pour ajouter un essaim</p>
+  }
+
+  <app-input [formControl]="form.controls.is_alive" type="checkbox">
+    L'essaim est-il vivant ?
+  </app-input>
+</div>
+<div mat-dialog-actions>
+  <app-button (click)="onNoClick()">Annuler</app-button>
+  <app-button [disabled]="form.invalid" (click)="confirm()" color="primary"
+    >Ajouter</app-button
+  >
+</div>
