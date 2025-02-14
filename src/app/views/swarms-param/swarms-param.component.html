@@ -1,1 +1,18 @@
-<p>swarms-param works!</p>
+<div class="swarms-param">
+  <app-button class="swarms-param__button" color="success" (click)="addSwarm()">
+    Ajouter
+  </app-button>
+  @for (swarm of swarms; track swarm.id) {
+    <mat-card>
+      <mat-card-content class="swarms-param__card__content">
+        <span>{{ swarm.name }}</span>
+        <div class="swarms-param__card__content__buttons">
+          <mat-icon (click)="editSwarm(swarm)"> edit </mat-icon>
+          <mat-icon (click)="deleteSwarm(swarm)"> delete </mat-icon>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  } @empty {
+    <mat-card> Aucun essaim </mat-card>
+  }
+</div>
