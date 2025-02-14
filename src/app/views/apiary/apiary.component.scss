@@ -23,6 +23,11 @@
     }
   }
 
+  &__chart {
+    padding-block: 10px;
+    min-height: 400px;
+  }
+
   &__hives {
     display: flex;
     flex-direction: column;

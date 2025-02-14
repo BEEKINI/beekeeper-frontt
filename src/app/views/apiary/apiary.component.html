@@ -9,6 +9,9 @@
       </div>
 
       <div class="apiary__header__buttons">
+        <app-button (click)="declaProd()" color="success"
+          >Décla prod</app-button
+        >
         <app-button color="primary" (click)="editApiary()"
           ><mat-icon>edit</mat-icon></app-button
         >
@@ -17,6 +20,13 @@
         >
       </div>
     </div>
+  </div>
+  <div class="apiary__chart">
+    @if (dataChart) {
+      <app-apiary-chart [dataChart]="dataChart" />
+    } @else {
+      <p>Erreur lors du chargement des données.</p>
+    }
   </div>
   <div class="apiary__hives">
     <h1>Localiser les ruches</h1>

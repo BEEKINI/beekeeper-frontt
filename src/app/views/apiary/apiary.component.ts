@@ -19,6 +19,12 @@ import { MapAddHiveComponent } from '../../modals/map-add-hive/map-add-hive.comp
 import { MatDialog } from '@angular/material/dialog';
 import { HiveModel, HiveQueries } from '../../queries/hive.queries';
 import { of, switchMap, tap } from 'rxjs';
+import { ApiaryDeclaProdComponent } from '../../modals/apiary-decla-prod/apiary-decla-prod.component';
+import {
+  HoneyProdQueries,
+  HoneyProductionApiary,
+} from '../../queries/honey-prod.queries';
+import { ApiaryChartComponent } from './apiary-chart/apiary-chart.component';
 
 @Component({
   selector: 'app-apiary',
@@ -29,6 +35,7 @@ import { of, switchMap, tap } from 'rxjs';
     ButtonComponent,
     MatCardModule,
     MatIconModule,
+    ApiaryChartComponent,
   ],
   templateUrl: './apiary.component.html',
   styleUrl: './apiary.component.scss',
@@ -44,21 +51,26 @@ export class ApiaryComponent implements OnInit, AfterViewInit {
   protected readonly mapService = inject(MapService);
   protected readonly dialog = inject(MatDialog);
   protected readonly hiveQueries = inject(HiveQueries);
+  protected readonly honeyProd = inject(HoneyProdQueries);
 
+  protected apiaryId!: number;
   protected apiary!: ApiariesModel;
+  protected dataChart!: HoneyProductionApiary | undefined;
 
   public ngOnInit(): void {
     this.activatedRoute.paramMap
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((params) => {
-        const apiaryId = +params.get('id')!;
+        this.apiaryId = +params.get('id')!;
 
         this.apiariesQueries
-          .read(apiaryId)
+          .read(this.apiaryId)
           .pipe(takeUntilDestroyed(this.destroyRef))
           .subscribe((apiary) => {
             this.apiary = apiary;
           });
+
+        this.refreshDataProduction();
       });
   }
 
@@ -73,6 +85,16 @@ export class ApiaryComponent implements OnInit, AfterViewInit {
       });
       this.initMarkers();
     }, 1000);
+  }
+
+  protected refreshDataProduction(): void {
+    this.dataChart = undefined;
+    this.honeyProd
+      .getProductionForApiary(this.apiaryId)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((prod) => {
+        this.dataChart = prod;
+      });
   }
 
   protected openDialog(
@@ -195,5 +217,30 @@ export class ApiaryComponent implements OnInit, AfterViewInit {
           });
       },
     });
+  }
+
+  protected declaProd(): void {
+    this.dialog
+      .open(ApiaryDeclaProdComponent, {
+        width: '400px',
+        disableClose: true,
+      })
+      .afterClosed()
+
+      .pipe(
+        switchMap((result) => {
+          if (result) {
+            return this.honeyProd.declareProduction(
+              result.qty,
+              this.apiary.id!,
+            );
+          }
+          return of(undefined);
+        }),
+        takeUntilDestroyed(this.destroyRef),
+      )
+      .subscribe(() => {
+        this.refreshDataProduction();
+      });
   }
 }
