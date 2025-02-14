@@ -18,6 +18,27 @@
       </div>
     </div>
   </div>
+  <div class="apiary__hives">
+    <h1>Localiser les ruches</h1>
+    <div id="map" style="height: 530px; margin-bottom: 10px"></div>
+    @for (hive of apiary.hives; track hive.id) {
+      <mat-card class="apiary__hives__card">
+        <mat-card-content class="apiary__hives__card__content">
+          <mat-icon> hive </mat-icon>
+          <div class="apiary__hives__card__content__info">
+            <span>{{ hive.name }}</span>
+            <span>{{ hive.id }}</span>
+          </div>
+          <div class="apiary__hives__card__content__actions">
+            <mat-icon (click)="editHive(hive.id!)"> edit </mat-icon>
+            <mat-icon (click)="deleteHive(hive.id!)"> delete </mat-icon>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    } @empty {
+      <p>Le rucher {{ apiary.name }} ne possède aucune ruche</p>
+    }
+  </div>
 } @else {
   <p>Erreur lors du chargement du rucher.</p>
 }

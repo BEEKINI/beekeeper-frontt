@@ -1,4 +1,4 @@
-<ng-container [ngSwitch]="type">
+<ng-container [ngSwitch]="_type">
   <ng-template ngSwitchCase="checkbox">
     <mat-checkbox [formControl]="control" [tabIndex]="tabIndex">
       <ng-container [ngTemplateOutlet]="content" />

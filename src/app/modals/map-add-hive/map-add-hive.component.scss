@@ -1,0 +1,16 @@
+.map-add-hive {
+  &__content {
+    display: flex;
+    flex-direction: column;
+    &__data {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    &__history {
+      padding-top: 10px;
+      align-self: center;
+    }
+  }
+}
