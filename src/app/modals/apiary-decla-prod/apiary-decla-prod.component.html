@@ -1,0 +1,10 @@
+<h1 mat-dialog-title>Déclarer la production</h1>
+<div mat-dialog-content>
+  <app-input type="number" [formControl]="form">
+    Déclarer une quantité (kg)
+  </app-input>
+</div>
+<div mat-dialog-actions>
+  <app-button (click)="onNoClick()">Annuler</app-button>
+  <app-button (click)="confirm()" color="primary">Déclarer</app-button>
+</div>
