@@ -8,6 +8,8 @@ export interface HiveModel {
   id?: number;
   apiary_id: number;
   name: string;
+  sensor_id: string;
+  bee_queen_color: string;
   installation_date: string;
   in_use: boolean;
   latitude: number;

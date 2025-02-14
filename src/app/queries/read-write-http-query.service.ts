@@ -17,8 +17,7 @@ export abstract class ReadWriteQueryService<
   }
 
   public update(id: number, dto: C): Observable<D> {
-    return this.http.put<D>(`${this.url}/${id}`, {
-      dto,
+    return this.http.put<D>(`${this.url}/${id}`, dto, {
       headers: this.tokenService.getHeadersForRequest(),
     });
   }

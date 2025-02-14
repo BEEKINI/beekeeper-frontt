@@ -6,6 +6,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ApiariesModel, ApiariesQueries } from '../../queries/apiaries.queries';
 import { of, switchMap, tap } from 'rxjs';
 import { Router } from '@angular/router';
+import { MapService } from '../../services/map.service';
 @Component({
   selector: 'app-map',
   standalone: true,
@@ -19,6 +20,7 @@ export class MapComponent implements AfterViewInit {
   protected readonly destroy = inject(DestroyRef);
   protected readonly apiariesQueries = inject(ApiariesQueries);
   protected readonly router = inject(Router);
+  protected readonly mapService = inject(MapService);
 
   public ngAfterViewInit(): void {
     this.initMap();
@@ -26,14 +28,8 @@ export class MapComponent implements AfterViewInit {
 
   protected initMap(): void {
     setTimeout(() => {
-      this.map = L.map('map', {
-        center: [45.7492, 4.8441],
-        zoom: 13,
-      });
-
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(
-        this.map,
-      );
+      this.map = this.mapService.initMap();
+      this.mapService.initTitle(this.map);
 
       this.map.on('click', (event: unknown) => {
         const { lat, lng } = (event as any).latlng;
@@ -50,11 +46,13 @@ export class MapComponent implements AfterViewInit {
         takeUntilDestroyed(this.destroy),
         tap((apiaries) => {
           apiaries.forEach((apiary) => {
-            this.addMarker(
+            this.mapService.addMarker(
               apiary.id!,
               apiary.latitude,
               apiary.longitude,
               apiary.name,
+              this.map!,
+              () => this.goToApiaryView(apiary.id!),
             );
           });
         }),
@@ -83,7 +81,14 @@ export class MapComponent implements AfterViewInit {
               })
               .pipe(
                 tap((created) => {
-                  this.addMarker(created.id!, lat, lng, result.name);
+                  this.mapService.addMarker(
+                    created.id!,
+                    lat,
+                    lng,
+                    result.name,
+                    this.map!,
+                    () => this.goToApiaryView(created.id!),
+                  );
                 }),
               );
           }
@@ -91,25 +96,6 @@ export class MapComponent implements AfterViewInit {
         }),
       )
       .subscribe();
-  }
-
-  protected addMarker(
-    id: number,
-    lat: number,
-    lng: number,
-    name: string,
-  ): void {
-    const icon = L.icon({
-      iconUrl: 'assets/leaflet/marker-icon.png',
-      iconSize: [25, 41],
-      iconAnchor: [12, 41],
-      popupAnchor: [1, -34],
-      shadowSize: [41, 41],
-    });
-
-    L.marker([lat, lng], { icon })
-      .addTo(this.map as L.Map)
-      .on('click', () => this.goToApiaryView(id));
   }
 
   protected goToApiaryView(id: number): void {
