@@ -1,1 +1,3 @@
-export const BASE_URL = 'http://127.0.0.1/api';
+import { environment } from '../../environments/environment';
+
+export const BASE_URL = environment.baseUrl;
