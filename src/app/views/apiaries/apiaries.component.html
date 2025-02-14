@@ -1,1 +1,22 @@
-<p>apiaries works!</p>
+<div class="apiaries__container">
+  @for (apiary of apiaries; track apiary.id) {
+    <mat-card
+      class="apiaries__container__card"
+      (click)="goToApiaryView(apiary.id!)"
+    >
+      <mat-card-header>
+        <mat-card-title>{{ apiary.name }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p class="apiaries__container__card__title">
+          <strong>Latitude:</strong> {{ apiary.latitude }}
+        </p>
+        <p class="apiaries__container__card__title">
+          <strong>Longitude:</strong> {{ apiary.longitude }}
+        </p>
+      </mat-card-content>
+    </mat-card>
+  } @empty {
+    <p>Aucun rucher n'a été trouvé. Veuillez en ajouter un via la map.</p>
+  }
+</div>

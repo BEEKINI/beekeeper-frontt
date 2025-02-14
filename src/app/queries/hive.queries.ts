@@ -3,26 +3,24 @@ import { CompleteQueryService } from './complete-http-query.service';
 import { QueryParams } from './read-only-http-query.service';
 import { HttpClient } from '@angular/common/http';
 import { BASE_URL } from '../consts/consts';
-import { HiveModel } from './hive.queries';
 
-export interface ApiariesModel {
+export interface HiveModel {
   id?: number;
+  apiary_id: number;
   name: string;
+  installation_date: string;
+  in_use: boolean;
   latitude: number;
   longitude: number;
-  hives: HiveModel[];
 }
 
 @Injectable({
   providedIn: 'root',
 })
-export class ApiariesQueries extends CompleteQueryService<
-  ApiariesModel,
-  QueryParams
-> {
-  protected static readonly URL = `${BASE_URL}/apiaries`;
+export class HiveQueries extends CompleteQueryService<HiveModel, QueryParams> {
+  protected static readonly URL = `${BASE_URL}/hives`;
 
   public constructor(http: HttpClient) {
-    super(http, ApiariesQueries.URL);
+    super(http, HiveQueries.URL);
   }
 }

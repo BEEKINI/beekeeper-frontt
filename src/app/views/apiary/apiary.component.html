@@ -1,1 +1,23 @@
-<p>apiary works!</p>
+@if (apiary) {
+  <div class="apiary">
+    <div class="apiary__header">
+      <div class="apiary__header__content">
+        <h1 class="apiary__header__content__title">
+          {{ apiary.name }}
+        </h1>
+        <mat-divider class="apiary__header__content__divider"></mat-divider>
+      </div>
+
+      <div class="apiary__header__buttons">
+        <app-button color="primary" (click)="editApiary()"
+          ><mat-icon>edit</mat-icon></app-button
+        >
+        <app-button color="danger" (click)="deleteApiary()"
+          ><mat-icon>delete</mat-icon></app-button
+        >
+      </div>
+    </div>
+  </div>
+} @else {
+  <p>Erreur lors du chargement du rucher.</p>
+}
