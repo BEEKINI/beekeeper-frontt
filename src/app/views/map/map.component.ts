@@ -1,4 +1,10 @@
-import { AfterViewInit, Component, DestroyRef, inject } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  DestroyRef,
+  inject,
+  OnInit,
+} from '@angular/core';
 import * as L from 'leaflet';
 import { MatDialog } from '@angular/material/dialog';
 import { MapAddApiaryComponent } from '../../modals/map-add-apiary/map-add-apiary.component';
@@ -7,20 +13,49 @@ import { ApiariesModel, ApiariesQueries } from '../../queries/apiaries.queries';
 import { of, switchMap, tap } from 'rxjs';
 import { Router } from '@angular/router';
 import { MapService } from '../../services/map.service';
+import {
+  NotificationModel,
+  NotificationService,
+} from '../../service/notification.service';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDividerModule } from '@angular/material/divider';
 @Component({
   selector: 'app-map',
   standalone: true,
-  imports: [],
+  imports: [MatCardModule, MatIconModule, MatDividerModule],
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss'],
 })
-export class MapComponent implements AfterViewInit {
+export class MapComponent implements AfterViewInit, OnInit {
   protected map: L.Map | null = null;
   protected readonly dialog = inject(MatDialog);
   protected readonly destroy = inject(DestroyRef);
   protected readonly apiariesQueries = inject(ApiariesQueries);
   protected readonly router = inject(Router);
   protected readonly mapService = inject(MapService);
+  protected readonly notificationService = inject(NotificationService);
+
+  protected notifications: NotificationModel[] = [];
+
+  public ngOnInit(): void {
+    this.notificationService.notifications
+      .pipe(takeUntilDestroyed(this.destroy))
+      .subscribe((notifications) => {
+        this.notifications = notifications;
+      });
+
+    this.notificationService
+      .fetchNotifications()
+      .pipe(takeUntilDestroyed(this.destroy))
+      .subscribe((notifications) => {
+        this.notifications = notifications;
+        this.notificationService.startPolling();
+      });
+    this.destroy.onDestroy(() => {
+      this.notificationService.stopPolling();
+    });
+  }
 
   public ngAfterViewInit(): void {
     this.initMap();
@@ -100,5 +135,16 @@ export class MapComponent implements AfterViewInit {
 
   protected goToApiaryView(id: number): void {
     this.router.navigateByUrl(`/dashboard/apiaries/${id}`);
+  }
+
+  protected deleteNotification(notifId: number): void {
+    this.notificationService
+      .deleteNotification(notifId)
+      .pipe(takeUntilDestroyed(this.destroy))
+      .subscribe(() => {
+        this.notifications = this.notifications.filter(
+          (notification) => notification.id !== notifId,
+        );
+      });
   }
 }
