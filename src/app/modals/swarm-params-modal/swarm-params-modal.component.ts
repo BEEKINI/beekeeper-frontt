@@ -66,7 +66,7 @@ export class SwarmParamsModalComponent implements OnInit {
         validators: [Validators.required],
       },
     ),
-    is_alive: new FormControl<boolean>(true, {
+    is_alive: new FormControl<boolean>(this.data.swarm?.is_alive!, {
       nonNullable: true,
       validators: [Validators.required],
     }),

@@ -2,14 +2,16 @@ import { Component, Inject } from '@angular/core';
 import {
   MatDialogRef,
   MAT_DIALOG_DATA,
-  MatDialog,
   MatDialogModule,
 } from '@angular/material/dialog';
 import { ButtonComponent } from '../../../app/shared/components/button/button.component';
 import { MatDividerModule } from '@angular/material/divider';
+import { ButtonColor } from '../../shared/components/button/button-base.directive';
 
 export interface ActionModalData {
-  elementLabel: string;
+  label: string;
+  labelAction: string;
+  colorAction: ButtonColor;
   callback: () => void;
 }
 

@@ -1,0 +1,26 @@
+<div mat-dialog-title>Historique de la ruche</div>
+
+<div mat-dialog-content>
+  @if (swarms.length > 0) {
+    @for (swarm of swarms; track $index) {
+      <mat-card
+        class="darwin-module-modal__card"
+        [ngClass]="
+          swarm.is_alive
+            ? 'darwin-module-modal__alive'
+            : 'darwin-module-modal__dead'
+        "
+      >
+        <mat-card-content>
+          {{ swarm.name }}
+        </mat-card-content>
+      </mat-card>
+    }
+  } @else {
+    <p>Aucune données à afficher</p>
+  }
+</div>
+
+<div mat-dialog-actions>
+  <app-button (click)="close()">Fermer</app-button>
+</div>
