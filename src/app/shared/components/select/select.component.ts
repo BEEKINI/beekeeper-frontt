@@ -30,6 +30,7 @@ import { FormService } from '../../services/form.service';
 export interface SelectOptionModel<T> {
   label: string;
   value: T;
+  color?: string;
 }
 
 @Component({
