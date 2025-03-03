@@ -1,6 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Observable, BehaviorSubject, interval, switchMap } from 'rxjs';
+import {
+  Observable,
+  BehaviorSubject,
+  interval,
+  switchMap,
+  Subscription,
+} from 'rxjs';
 import { TokenService } from '../services/token.service';
 import { BASE_URL } from '../consts/consts';
 
@@ -17,6 +23,7 @@ export class NotificationService {
   protected static readonly URL = `${BASE_URL}/notifications`;
 
   protected notifications$ = new BehaviorSubject<NotificationModel[]>([]);
+  protected subscription!: Subscription;
 
   protected readonly http = inject(HttpClient);
   protected readonly tokenService = inject(TokenService);
@@ -32,7 +39,11 @@ export class NotificationService {
   }
 
   public startPolling(): void {
-    interval(5000)
+    if (this.subscription) {
+      this.stopPolling();
+    }
+
+    this.subscription = interval(5000)
       .pipe(switchMap(() => this.fetchNotifications()))
       .subscribe((notifications) => {
         this.notifications$.next(notifications);
@@ -40,7 +51,9 @@ export class NotificationService {
   }
 
   public stopPolling(): void {
-    this.notifications$.complete();
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
   public deleteNotification(notifId: number): Observable<void> {

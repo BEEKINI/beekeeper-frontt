@@ -26,9 +26,10 @@ import {
 } from '../../queries/honey-prod.queries';
 import { ApiaryChartComponent } from './apiary-chart/apiary-chart.component';
 import { DarwinModuleModalComponent } from '../../modals/darwin-module-modal/darwin-module-modal.component';
+
 import {
   InterventionQueries,
-  InverventionModel,
+  InterventionModel,
 } from '../../queries/interventions.queries';
 
 @Component({
@@ -62,7 +63,7 @@ export class ApiaryComponent implements OnInit, AfterViewInit {
   protected apiaryId!: number;
   protected apiary!: ApiariesModel;
   protected dataChart!: HoneyProductionApiary | undefined;
-  protected interventions: InverventionModel[] = [];
+  protected interventions: InterventionModel[] = [];
 
   public ngOnInit(): void {
     this.activatedRoute.paramMap

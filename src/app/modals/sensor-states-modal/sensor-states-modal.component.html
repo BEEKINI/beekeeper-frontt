@@ -1,0 +1,38 @@
+<div mat-dialog-title>Historique des états de l'essaim</div>
+
+<div mat-dialog-content>
+  <div class="sensor-states__list">
+    @for (state of data.states; track state.id) {
+      <mat-card
+        class="sensor-states__list__card"
+        [ngClass]="
+          state.alert
+            ? 'sensor-states__list__card--alert'
+            : 'sensor-states__list__card--no-alert'
+        "
+      >
+        <mat-card-header>
+          <mat-card-title>{{ state.detected_state }}</mat-card-title>
+          <mat-card-subtitle>{{
+            state.created_at | date: "short"
+          }}</mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content>
+          <div class="sensor-states__list__card__info">
+            <span><b>Température: </b> {{ state.temperature }}°C</span>
+            <span><b>Humidité: </b> {{ state.humidity }}%</span>
+            <span><b>CO₂: </b> {{ state.co2_level }} ppm</span>
+            <span><b>Poids: </b> {{ state.weight }} kg</span>
+            <span><b>Vibration: </b> {{ state.vibration_level }}</span>
+            <span><b>Son: </b> {{ state.sound_level }} dB</span>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    }
+  </div>
+</div>
+
+<div mat-dialog-actions>
+  <app-button (click)="close()">Fermer</app-button>
+</div>
