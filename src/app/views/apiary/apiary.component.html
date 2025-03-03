@@ -28,6 +28,25 @@
       <p>Erreur lors du chargement des données.</p>
     }
   </div>
+  <div class="apiary__intervention">
+    <h1>Prochaines interventions</h1>
+    @for (intervention of interventions; track $index) {
+      <mat-card class="apiary__interventions__card">
+        <mat-card-content class="apiary__interventions__card__content">
+          <mat-icon> event_note </mat-icon>
+          <div class="apiary__interventions__card__content__info">
+            <span>{{ intervention.name }}</span>
+            <span>{{ intervention.description }}</span>
+          </div>
+          <div>
+            <span>{{ intervention.date }}</span>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    } @empty {
+      <p>Le rucher {{ apiary.name }} ne possède aucune interventions</p>
+    }
+  </div>
   <div class="apiary__hives">
     <h1>Localiser les ruches</h1>
     <div id="map" style="height: 530px; margin-bottom: 10px"></div>

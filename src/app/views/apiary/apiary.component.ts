@@ -26,6 +26,10 @@ import {
 } from '../../queries/honey-prod.queries';
 import { ApiaryChartComponent } from './apiary-chart/apiary-chart.component';
 import { DarwinModuleModalComponent } from '../../modals/darwin-module-modal/darwin-module-modal.component';
+import {
+  InterventionQueries,
+  InverventionModel,
+} from '../../queries/interventions.queries';
 
 @Component({
   selector: 'app-apiary',
@@ -53,10 +57,12 @@ export class ApiaryComponent implements OnInit, AfterViewInit {
   protected readonly dialog = inject(MatDialog);
   protected readonly hiveQueries = inject(HiveQueries);
   protected readonly honeyProd = inject(HoneyProdQueries);
+  protected readonly interventionQueries = inject(InterventionQueries);
 
   protected apiaryId!: number;
   protected apiary!: ApiariesModel;
   protected dataChart!: HoneyProductionApiary | undefined;
+  protected interventions: InverventionModel[] = [];
 
   public ngOnInit(): void {
     this.activatedRoute.paramMap
@@ -69,6 +75,13 @@ export class ApiaryComponent implements OnInit, AfterViewInit {
           .pipe(takeUntilDestroyed(this.destroyRef))
           .subscribe((apiary) => {
             this.apiary = apiary;
+          });
+
+        this.interventionQueries
+          .getForApiary(this.apiaryId)
+          .pipe(takeUntilDestroyed(this.destroyRef))
+          .subscribe((result) => {
+            this.interventions = result;
           });
 
         this.refreshDataProduction();
