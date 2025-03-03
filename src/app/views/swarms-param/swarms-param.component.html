@@ -7,6 +7,8 @@
       <mat-card-content class="swarms-param__card__content">
         <span>{{ swarm.name }}</span>
         <div class="swarms-param__card__content__buttons">
+          <mat-icon (click)="cloneSwarm(swarm.id!)"> content_copy </mat-icon>
+          <mat-icon (click)="showHistory(swarm.id!)"> history </mat-icon>
           <mat-icon (click)="editSwarm(swarm)"> edit </mat-icon>
           <mat-icon (click)="deleteSwarm(swarm)"> delete </mat-icon>
         </div>

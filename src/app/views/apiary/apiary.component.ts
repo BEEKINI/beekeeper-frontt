@@ -25,6 +25,7 @@ import {
   HoneyProductionApiary,
 } from '../../queries/honey-prod.queries';
 import { ApiaryChartComponent } from './apiary-chart/apiary-chart.component';
+import { DarwinModuleModalComponent } from '../../modals/darwin-module-modal/darwin-module-modal.component';
 
 @Component({
   selector: 'app-apiary',
@@ -187,7 +188,9 @@ export class ApiaryComponent implements OnInit, AfterViewInit {
 
   protected deleteApiary(): void {
     this.actionModal.open({
-      elementLabel: this.apiary.name,
+      label: `Etes-vous sur de vouloir supprimer ${this.apiary.name} ?`,
+      colorAction: 'danger',
+      labelAction: 'Supprimer',
       callback: () => {
         this.apiariesQueries
           .delete(this.apiary.id!)
@@ -205,8 +208,11 @@ export class ApiaryComponent implements OnInit, AfterViewInit {
   }
 
   protected deleteHive(id: number): void {
+    const hiveName = this.apiary.hives?.find((h) => h.id === id)?.name!;
     this.actionModal.open({
-      elementLabel: this.apiary.hives?.find((h) => h.id === id)?.name!,
+      label: `Etes-vous sur de vouloir supprimer ${hiveName} ?`,
+      colorAction: 'danger',
+      labelAction: 'Supprimer',
       callback: () => {
         this.hiveQueries
           .delete(id)
@@ -226,7 +232,6 @@ export class ApiaryComponent implements OnInit, AfterViewInit {
         disableClose: true,
       })
       .afterClosed()
-
       .pipe(
         switchMap((result) => {
           if (result) {

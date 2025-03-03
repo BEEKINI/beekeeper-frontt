@@ -8,6 +8,8 @@ import { of, switchMap } from 'rxjs';
 import { ActionModalService } from '../../modals/action-modal/action-modal.service';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
+import { DarwinModuleModalComponent } from '../../modals/darwin-module-modal/darwin-module-modal.component';
+import { ActionModalComponent } from '../../modals/action-modal/action-modal.component';
 
 @Component({
   selector: 'app-swarms-param',
@@ -47,7 +49,9 @@ export class SwarmsParamComponent implements OnInit {
 
   protected deleteSwarm(swarm: SwarmModel): void {
     this.actionModal.open({
-      elementLabel: swarm.name,
+      label: `Etes-vous sur de vouloir supprimer ${swarm.name} ?`,
+      colorAction: 'danger',
+      labelAction: 'Supprimer',
       callback: () =>
         this.swarmQueries
           .delete(swarm.id!)
@@ -82,5 +86,36 @@ export class SwarmsParamComponent implements OnInit {
       .subscribe(() => {
         this.refresh();
       });
+  }
+
+  protected showHistory(swarmId: number): void {
+    this.dialog
+      .open(DarwinModuleModalComponent, {
+        width: '400px',
+        disableClose: true,
+        data: { swarmId },
+      })
+      .afterClosed()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe();
+  }
+
+  protected cloneSwarm(swarmId: number): void {
+    const swarm = this.swarms.find((s) => s.id === swarmId)!;
+    this.actionModal.open({
+      label: `Vous êtes sur le point de cloner  ${swarm.name}`,
+      colorAction: 'primary',
+      labelAction: 'Cloner',
+      callback: () =>
+        this.swarmQueries
+          .clone(swarmId, {
+            ...swarm,
+            name: `${swarm.name} - clone`,
+          })
+          .pipe(takeUntilDestroyed(this.destroyRef))
+          .subscribe(() => {
+            this.refresh();
+          }),
+    });
   }
 }

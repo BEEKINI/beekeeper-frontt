@@ -91,10 +91,6 @@ export class MapAddHiveComponent {
     console.log(data);
   }
 
-  protected showSwarmHistory(): void {
-    // todo
-  }
-
   protected onNoClick(): void {
     this.dialogRef.close();
   }

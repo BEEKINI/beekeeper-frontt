@@ -1,0 +1,15 @@
+.darwin-module-modal {
+  &__card {
+    margin-block: 10px;
+    color: white;
+    font-size: 1.2rem;
+    text-align: center;
+  }
+
+  &__dead {
+    background-color: #d63939;
+  }
+  &__alive {
+    background-color: #4caf50;
+  }
+}
