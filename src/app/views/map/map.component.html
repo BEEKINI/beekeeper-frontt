@@ -1,1 +1,22 @@
 <div id="map" style="height: 500px"></div>
+<mat-divider class="map__divider" />
+<div>
+  <h2 class="map__title">Notifications</h2>
+  @if (notifications.length === 0) {
+    <p>Aucune notification</p>
+  } @else {
+    @for (notif of notifications; track $index) {
+      <mat-card class="map__notification">
+        <mat-card-content class="map__notification__content">
+          <div class="map__notification__content__message">
+            <mat-icon class="map__notification__content__message__icon"
+              >info</mat-icon
+            >
+            <span>{{ notif.message }}</span>
+          </div>
+          <mat-icon (click)="deleteNotification(notif.id)">close</mat-icon>
+        </mat-card-content>
+      </mat-card>
+    }
+  }
+</div>
