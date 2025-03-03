@@ -28,12 +28,15 @@
     min-height: 400px;
   }
 
+  &__interventions,
   &__hives {
+    margin-block: 10px;
     display: flex;
     flex-direction: column;
     &__card {
       flex: 1;
       width: 100%;
+      margin-bottom: 5px;
       &__content {
         display: flex;
         justify-content: space-between;
