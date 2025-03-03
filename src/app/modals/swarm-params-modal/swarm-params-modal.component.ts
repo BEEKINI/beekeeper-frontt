@@ -77,6 +77,12 @@ export class SwarmParamsModalComponent implements OnInit {
   protected allHivesOptions: SelectOptionModel<HiveModel>[] = [];
   protected occupiedHives: Set<number> = new Set();
 
+  protected readonly title =
+    this.data.mode === 'create' ? 'Ajouter un essaim' : 'Modifier un essaim';
+
+  protected readonly actionTitle =
+    this.data.mode === 'create' ? 'Ajouter' : 'Modifier';
+
   public constructor(
     protected dialogRef: MatDialogRef<SwarmParamsModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: SwarmParamsModel,

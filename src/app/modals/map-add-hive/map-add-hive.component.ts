@@ -50,6 +50,9 @@ export class MapAddHiveComponent {
   protected readonly title =
     this.data.mode === 'create' ? 'Ajouter une ruche' : 'Modifier une ruche';
 
+  protected readonly actionTitle =
+    this.data.mode === 'create' ? 'Ajouter' : 'Modifier';
+
   protected readonly form = new FormGroup<MapAddHiveForm>({
     name: new FormControl(this.data.hive ? this.data.hive.name : '', {
       validators: [Validators.required],
@@ -75,8 +78,9 @@ export class MapAddHiveComponent {
   protected readonly beeQueenColorOptions: SelectOptionModel<string>[] =
     BEE_QUEEN_COLOR.map((color) => {
       return {
-        value: color,
-        label: color,
+        value: color.label,
+        label: color.label,
+        color: color.color,
       };
     });
 

@@ -24,6 +24,7 @@
     </mat-select-trigger>
     <mat-option
       *ngFor="let option of options; trackBy: trackByFn"
+      [style.background]="option.color"
       [value]="option.value"
     >
       <ng-container
