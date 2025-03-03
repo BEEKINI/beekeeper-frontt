@@ -1,0 +1,44 @@
+:host {
+  ::ng-deep {
+    .mat-mdc-card-header-text {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+    }
+    .mat-mdc-card-content {
+      margin-top: 5px;
+    }
+  }
+
+  .sensor-states {
+    &__list {
+      margin-top: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+
+      &__card {
+        display: flex;
+        flex-direction: column;
+        border-left: 5px solid transparent;
+        transition: 0.3s;
+        justify-content: space-between;
+        &--alert {
+          border-left-color: #d63939;
+        }
+        &--no-alert {
+          border-left-color: #4caf50;
+        }
+
+        &__info {
+          display: flex;
+          flex-wrap: wrap;
+          font-size: 14px;
+          color: #555;
+          justify-content: space-between;
+        }
+      }
+    }
+  }
+}

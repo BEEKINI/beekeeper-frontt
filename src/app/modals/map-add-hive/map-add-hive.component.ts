@@ -87,9 +87,7 @@ export class MapAddHiveComponent {
   public constructor(
     @Inject(MAT_DIALOG_DATA) public data: MapAddHiveDataInput,
     protected readonly dialogRef: MatDialogRef<MapAddHiveComponent>,
-  ) {
-    console.log(data);
-  }
+  ) {}
 
   protected onNoClick(): void {
     this.dialogRef.close();

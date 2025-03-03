@@ -9,7 +9,7 @@ import { ActionModalService } from '../../modals/action-modal/action-modal.servi
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { DarwinModuleModalComponent } from '../../modals/darwin-module-modal/darwin-module-modal.component';
-import { ActionModalComponent } from '../../modals/action-modal/action-modal.component';
+import { SensorStatesModalComponent } from '../../modals/sensor-states-modal/sensor-states-modal.component';
 
 @Component({
   selector: 'app-swarms-param',
@@ -94,6 +94,19 @@ export class SwarmsParamComponent implements OnInit {
         width: '400px',
         disableClose: true,
         data: { swarmId },
+      })
+      .afterClosed()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe();
+  }
+
+  protected showSensorStates(swarmId: number): void {
+    const swarm = this.swarms.find((s) => s.id === swarmId)!;
+    this.dialog
+      .open(SensorStatesModalComponent, {
+        width: '400px',
+        disableClose: true,
+        data: { states: swarm.states },
       })
       .afterClosed()
       .pipe(takeUntilDestroyed(this.destroyRef))
