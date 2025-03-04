@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import {
   EditApiaryModalComponent,
   EditApiaryModel,
@@ -11,8 +11,10 @@ import {
 export class EditApiaryModalService {
   protected readonly dialog = inject(MatDialog);
 
-  public open(data: EditApiaryModel): void {
-    this.dialog.open(EditApiaryModalComponent, {
+  public open(
+    data: EditApiaryModel,
+  ): MatDialogRef<EditApiaryModalComponent, any> {
+    return this.dialog.open(EditApiaryModalComponent, {
       width: '400px',
       data,
       autoFocus: false,

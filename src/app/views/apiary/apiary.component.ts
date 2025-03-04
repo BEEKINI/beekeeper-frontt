@@ -193,11 +193,26 @@ export class ApiaryComponent implements OnInit, AfterViewInit {
     });
   }
 
+  protected readonly apiaryQueries = inject(ApiariesQueries);
+
   protected editApiary(): void {
-    this.editApiaryModal.open({
-      name: this.apiary.name,
-      hives: this.apiary.hives ?? [],
-    });
+    this.editApiaryModal
+      .open({
+        name: this.apiary.name,
+      })
+      .afterClosed()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((result) => {
+        this.apiariesQueries
+          .update(this.apiaryId, {
+            ...this.apiary,
+            name: result.name,
+          })
+          .pipe(takeUntilDestroyed(this.destroyRef))
+          .subscribe(() => {
+            this.apiary.name = result.name;
+          });
+      });
   }
 
   protected deleteApiary(): void {
