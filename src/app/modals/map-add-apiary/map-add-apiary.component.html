@@ -8,5 +8,7 @@
 </div>
 <div mat-dialog-actions>
   <app-button (click)="onNoClick()">Annuler</app-button>
-  <app-button (click)="confirm()" color="primary">Ajouter</app-button>
+  <app-button [disabled]="form.invalid" (click)="confirm()" color="primary"
+    >Ajouter</app-button
+  >
 </div>
