@@ -42,6 +42,7 @@ export class ConnexionComponent {
   protected readonly tokenService = inject(TokenService);
 
   protected connexion(): void {
+    console.log('Connexion');
     this.authQueries
       .login({
         email: this.form.controls.email.value,
@@ -49,6 +50,8 @@ export class ConnexionComponent {
       })
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((result) => {
+        console.log('result', result);
+
         if (result) {
           this.tokenService.setToken(result);
           this.router.navigateByUrl('/dashboard');

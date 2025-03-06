@@ -16,7 +16,7 @@ import { MapService } from '../../services/map.service';
 import {
   NotificationModel,
   NotificationService,
-} from '../../service/notification.service';
+} from '../../services/notification.service';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
